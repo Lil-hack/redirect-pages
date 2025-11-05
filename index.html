@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Mini App</title>
+</head>
+<body>
+    <div id="content">
+        <h1>Hello</h1>
+    </div>
+
+    <script>
+        // Функция для получения параметра startapp из URL
+        function getStartParam() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('startapp') || '';
+        }
+
+        // Основная логика редиректа
+        function handleRedirect() {
+            const startParam = getStartParam();
+
+            if (startParam === 'menu1') {
+                // Редирект на указанную ссылку
+                window.location.href = 'https://eatandsplit.com/?menu=8b82d97a-7db8-4394-9bdd-cfeb8558747d';
+            } else if (startParam === '') {
+                // Параметр пустой - показываем страницу с hello
+                document.getElementById('content').innerHTML = '<h1>Hello</h1>';
+            } else {
+                // Другие параметры - можно добавить дополнительную логику если нужно
+                document.getElementById('content').innerHTML = '<h1>Hello</h1><p>Unknown parameter: ' + startParam + '</p>';
+            }
+        }
+
+        // Выполняем обработку при загрузке страницы
+        window.addEventListener('load', handleRedirect);
+    </script>
+</body>
+</html>
