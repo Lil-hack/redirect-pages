@@ -36,10 +36,12 @@
         function getTelegramData() {
             const data = {
                 isAvailable: false,
+                isReady: false,
                 user: null,
                 startParam: '',
                 initData: '',
                 platform: '',
+                version: '',
                 theme: null,
                 viewportHeight: 0,
                 viewportStableHeight: 0
@@ -47,10 +49,12 @@
 
             if (window.Telegram && window.Telegram.WebApp) {
                 data.isAvailable = true;
+                data.isReady = window.Telegram.WebApp.isReady || false;
                 data.user = window.Telegram.WebApp.initDataUnsafe?.user || null;
                 data.startParam = getStartParam();
                 data.initData = window.Telegram.WebApp.initData || '';
                 data.platform = window.Telegram.WebApp.platform || '';
+                data.version = window.Telegram.WebApp.version || '';
                 data.theme = window.Telegram.WebApp.themeParams || null;
                 data.viewportHeight = window.Telegram.WebApp.viewportHeight || 0;
                 data.viewportStableHeight = window.Telegram.WebApp.viewportStableHeight || 0;
@@ -83,6 +87,8 @@
             html += '<ul>';
             html += '<li><strong>Start Param:</strong> "' + (data.startParam || 'пустой') + '"</li>';
             html += '<li><strong>Platform:</strong> ' + (data.platform || 'N/A') + '</li>';
+            html += '<li><strong>Version:</strong> ' + (data.version || 'N/A') + '</li>';
+            html += '<li><strong>Is Ready:</strong> ' + (data.isReady ? '✅ Да' : '❌ Нет') + '</li>';
             html += '<li><strong>Viewport Height:</strong> ' + data.viewportHeight + '</li>';
             html += '<li><strong>Viewport Stable Height:</strong> ' + data.viewportStableHeight + '</li>';
             html += '</ul>';
@@ -132,7 +138,23 @@
         }
 
         // Выполняем обработку при загрузке страницы
-        window.addEventListener('load', handleRedirect);
+        window.addEventListener('load', function() {
+            // Инициализируем Telegram Web App
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.ready();
+
+                // Небольшая задержка для полной инициализации
+                setTimeout(handleRedirect, 100);
+            } else {
+                // Если API недоступен, пробуем еще раз через некоторое время
+                setTimeout(function() {
+                    if (window.Telegram && window.Telegram.WebApp) {
+                        window.Telegram.WebApp.ready();
+                    }
+                    handleRedirect();
+                }, 500);
+            }
+        });
     </script>
 </body>
 </html>
