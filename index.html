@@ -148,9 +148,18 @@
         function handleRedirect() {
             const startParam = getStartParam();
 
-            if (startParam === 'menu1') {
-                // Редирект на указанную ссылку
-                window.location.href = 'https://eatandsplit.com/?menu=8b82d97a-7db8-4394-9bdd-cfeb8558747d';
+            // Обработка параметров для редиректа
+            const redirectMap = {
+                'menu1': 'https://eatandsplit.com/?menu=60f85346-c490-41d5-b56a-db1f4089ed51',
+                'menu2': 'https://eatandsplit.com/?menu=8b82d97a-7db8-4394-9bdd-cfeb8558747d',
+                'menu3': 'https://eatandsplit.com/?menu=f2d615ab-0a46-4fae-87ea-13f7c16121af',
+                'bron1': 'https://larsvegans.restoplace.ws/',
+                'bron2': 'https://meatcrew.ru/hlebozavod#popup:order2'
+            };
+
+            if (redirectMap[startParam]) {
+                // Редирект на соответствующую ссылку
+                window.location.href = redirectMap[startParam];
             } else {
                 // Получаем данные Telegram и отображаем страницу с hello
                 const telegramData = getTelegramData();
