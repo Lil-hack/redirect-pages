@@ -11,8 +11,22 @@
     </div>
 
     <script>
-        // Функция для получения параметра startapp из URL
+        // Функция для получения параметра startapp из Telegram Web App API
         function getStartParam() {
+            // Проверяем доступность Telegram Web App API
+            if (window.Telegram && window.Telegram.WebApp) {
+                // Безопасный способ получения start_param
+                if (window.Telegram.WebApp.initData) {
+                    const initData = new URLSearchParams(window.Telegram.WebApp.initData);
+                    return initData.get('start_param') || '';
+                }
+                // Альтернативный способ через initDataUnsafe
+                else if (window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.start_param) {
+                    return window.Telegram.WebApp.initDataUnsafe.start_param;
+                }
+            }
+
+            // Fallback на URL параметры для тестирования вне Telegram
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('startapp') || '';
         }
