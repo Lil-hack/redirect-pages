@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram App - Личный кабинет</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #fff6ec;
+            color: #000;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Main container */
+        .cabinet-container {
+            position: relative;
+            min-height: 810px;
+            background: linear-gradient(0.957turn, rgba(237,204,240,1) 0%, rgba(183,227,233,1) 100%);
+            display: flex;
+                       justify-content: center;
+        }
+
+        /* Background decorative circle */
+        .background-circle {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-468px);
+            width: 936px;
+            height: 936px;
+            background-image: url('images/tild3434-3861-4734-b335-303839306338__-.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Main content */
+        .cabinet-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Logo/Slogan */
+        .main-slogan {
+            font-size: 50px;
+            font-weight: 900;
+            line-height: 1.55;
+            opacity: 0.7;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        /* Cabinet title */
+        .cabinet-title {
+            font-size: 30px;
+            font-weight: 400;
+            line-height: 1.55;
+            opacity: 0.5;
+            margin-bottom: 30px;
+            color: #000;
+        }
+
+        /* Greeting */
+        .greeting {
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 1.55;
+            opacity: 0.7;
+            margin-bottom: 60px;
+            color: #000;
+        }
+
+        /* User info section */
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .info-label {
+            font-size: 24px;
+            font-weight: 400;
+            opacity: 0.6;
+            min-width: 200px;
+            text-align: left;
+        }
+
+        .info-value {
+            height: 44px;
+            background-color: #fff705;
+            border-radius: 0;
+            border: none;
+            flex: 1;
+            max-width: 290px;
+        }
+
+        /* Decorative elements */
+        .decorative-circles {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            z-index: 3;
+        }
+
+        .circle-large {
+            width: 202px;
+            height: 202px;
+            background: linear-gradient(0.945turn, rgba(255,107,230,1) 0%, rgba(154,255,241,1) 100%);
+            border-radius: 50%;
+            box-shadow: 5px 10px 10px rgba(58,58,58,0.1);
+            position: relative;
+        }
+
+        .circle-small {
+            width: 195px;
+            height: 195px;
+            background-color: #fff705;
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+        }
+
+        /* Bottom decorative square */
+        .bottom-square {
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 5px 10px 20px rgba(58,58,58,0.15);
+            margin: 60px auto 0;
+            display: block;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1199px) {
+            .cabinet-container {
+                min-height: 100vh;
+            }
+        }
+
+        @media (max-width: 959px) {
+            .cabinet-container {
+                min-height: 100vh;
+            }
+        }
+
+        @media (max-width: 639px) {
+            .cabinet-container {
+                min-height: 100vh;
+                padding: 20px;
+            }
+
+            .background-circle {
+                top: 39px;
+                transform: translateX(-350px);
+                width: 700px;
+                height: 650px;
+            }
+
+            .main-slogan {
+                font-size: 34px;
+            }
+
+            .cabinet-title {
+                font-size: 20px;
+                margin-top: 10px;
+            }
+
+            .greeting {
+                font-size: 25px;
+                margin-top: 20px;
+                margin-bottom: 40px;
+            }
+
+            .info-label {
+                font-size: 16px;
+                min-width: 150px;
+            }
+
+            .info-value {
+                height: 30px;
+            }
+
+            .decorative-circles {
+                margin: 30px 0;
+            }
+
+            .circle-large {
+                width: 95px;
+                height: 95px;
+            }
+
+            .circle-small {
+                width: 92px;
+                height: 92px;
+            }
+
+            .bottom-square {
+                width: 300px;
+                height: 300px;
+                margin: 40px auto 0;
+            }
+        }
+
+        @media (max-width: 479px) {
+            .cabinet-container {
+                min-height: 100vh;
+                padding: 15px;
+            }
+
+            .cabinet-content {
+                padding: 20px 10px;
+            }
+
+            .background-circle {
+                top: 30px;
+                transform: translateX(-252px);
+                width: 505px;
+                height: 505px;
+            }
+
+            .main-slogan {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            .cabinet-title {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .greeting {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+
+            .user-info {
+                margin-bottom: 40px;
+                gap: 20px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                margin-bottom: 15px;
+            }
+
+            .info-label {
+                font-size: 12px;
+                min-width: auto;
+                text-align: left;
+            }
+
+            .info-value {
+                height: 30px;
+                width: 100%;
+                max-width: none;
+            }
+
+            .decorative-circles {
+                margin: 20px 0;
+            }
+
+            .circle-large {
+                width: 96px;
+                height: 96px;
+            }
+
+            .circle-small {
+                width: 92px;
+                height: 92px;
+            }
+
+            .bottom-square {
+                width: 250px;
+                height: 250px;
+                margin: 30px auto 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cabinet-container">
+        <!-- Background decorative circle -->
+        <div class="background-circle" aria-hidden="true"></div>
+
+        <!-- Main content -->
+        <div class="cabinet-content">
+            <h1 class="main-slogan">ЕШЬ, КОПИ, ЛЮБИ</h1>
+
+            <h2 class="cabinet-title">ЛИЧНЫЙ КАБИНЕТ</h2>
+
+            <!-- Decorative circles -->
+            <div class="decorative-circles">
+                <div class="circle-large">
+                    <div class="circle-small"></div>
+                </div>
+            </div>
+
+            <div class="greeting">Здравствуйте, %name%!</div>
+
+            <!-- User information section -->
+            <div class="user-info">
+                <div class="info-row">
+                    <div class="info-label">НОМЕР КАРТЫ:</div>
+                    <div class="info-value"></div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-label">БАЛЛЫ:</div>
+                    <div class="info-value"></div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-label">ДАТА ПОСЛЕДНЕГО ВИЗИТА:</div>
+                    <div class="info-value"></div>
+                </div>
+            </div>
+
+            <!-- Bottom decorative square -->
+            <div class="bottom-square"></div>
+        </div>
+    </div>
+</body>
+</html>
