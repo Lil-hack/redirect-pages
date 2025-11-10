@@ -673,12 +673,14 @@
                     }
                 }
 
-                // Заменяем декоративные круги на аватар
+                // Заменяем декоративные круги на аватар или логотип
                 const decorativeCircles = document.querySelector('.decorative-circles');
-                if (decorativeCircles && data.avatar) {
+                if (decorativeCircles) {
+                    const avatarSrc = data.avatar || 'images/logome.JPG';
+                    const altText = data.avatar ? 'Аватар' : 'Логотип';
                     decorativeCircles.innerHTML = `
                         <div class="avatar-container">
-                            <img src="${data.avatar}" alt="Аватар" class="user-avatar">
+                            <img src="${avatarSrc}" alt="${altText}" class="user-avatar">
                         </div>
                     `;
                 }
