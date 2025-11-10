@@ -322,6 +322,79 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
+        /* Modal/Popup styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgb(255 255 255 / 95%);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-message {
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.8);
+            line-height: 1.5;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .modal-button {
+            background: linear-gradient(135deg, #ff6be6, #9afff1);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .modal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 230, 0.3);
+        }
+
         /* Responsive design */
         @media (max-width: 1199px) {
             .cabinet-container {
@@ -506,6 +579,15 @@
         </div>
     </div>
 
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">Требуется регистрация в боте</h2>
+            <p class="modal-message">Вы не зарегистрированы в нашей системе лояльности. Пройдите регистрацию в боте.</p>
+            <button class="modal-button" onclick="closeTelegramWebApp()">Понятно</button>
+        </div>
+    </div>
+
     <div class="cabinet-container">
         <!-- Background decorative circle -->
         <div class="background-circle" aria-hidden="true"></div>
@@ -643,14 +725,114 @@
             container.classList.add('qr-container');
         }
 
+        // Функции для управления модальным окном
+        function showModal() {
+            const modal = document.getElementById('registrationModal');
+            if (modal) {
+                modal.classList.add('show');
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('registrationModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        function closeTelegramWebApp() {
+            // Закрываем модальное окно
+           
+
+            // Небольшая задержка перед закрытием Web App для плавности
+            setTimeout(() => {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.close();
+                } else {
+                    console.warn('Telegram Web App API не доступен');
+                }
+            }, 100);
+        }
+
+        // Обработчики для закрытия модального окна
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('registrationModal');
+
+            // Закрытие по клику вне модального окна
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Закрытие по нажатию Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    closeModal();
+                }
+            });
+        });
+
+        // Функция для проверки типа ошибки JSON parsing
+        function isJSONParseError(error) {
+            return error instanceof SyntaxError &&
+                   (error.message.includes('Failed to execute \'json\'') ||
+                    error.message.includes('Unexpected end of JSON input') ||
+                    error.message.includes('JSON.parse'));
+        }
+
+        // Основная логика редиректа
+        function handleRedirect() {
+            const startParam = getStartParam();
+
+            // Обработка параметров для редиректа
+            const redirectMap = {
+                'menu1': 'https://eatandsplit.com/?menu=60f85346-c490-41d5-b56a-db1f4089ed51',
+                'menu2': 'https://eatandsplit.com/?menu=8b82d97a-7db8-4394-9bdd-cfeb8558747d',
+                'menu3': 'https://eatandsplit.com/?menu=f2d615ab-0a46-4fae-87ea-13f7c16121af',
+                'bron1': 'https://larsvegans.restoplace.ws/',
+                'bron2': 'https://meatcrew.ru/hlebozavod#popup:order2'
+            };
+
+            if (redirectMap[startParam]) {
+                // Редирект на соответствующую ссылку
+                window.location.href = redirectMap[startParam];
+            } else {
+                // Продолжаем загрузку личного кабинета
+                loadClientData();
+            }
+        }
+
         async function loadClientData() {
             try {
                 // Получаем данные Telegram пользователя
                 const telegramData = getTelegramData();
-                const userId = telegramData.user ? telegramData.user.id : '5217963910'; // fallback на старый ID если нет данных
+                const userId = telegramData.user ? telegramData.user.id : '256684801'; // fallback на старый ID если нет данных
 
                 const response = await fetch(`https://n8nservice.online/webhook/lookup-client?chatid=${userId}`);
                 const data = await response.json();
+
+                // Проверяем, возвратил ли сервер false (пользователь не зарегистрирован)
+                if (data === false) {
+                    console.log('Сервер вернул false - пользователь не зарегистрирован');
+
+                    // Устанавливаем логотип вместо аватара для незарегистрированных пользователей
+                    const decorativeCircles = document.querySelector('.decorative-circles');
+                    if (decorativeCircles) {
+                        decorativeCircles.innerHTML = `
+                            <div class="avatar-container">
+                                <img src="images/logome.JPG" alt="Логотип" class="user-avatar">
+                            </div>
+                        `;
+                    }
+
+                    // Показываем модальное окно для незарегистрированных пользователей
+                    showModal();
+
+                    // Скрываем загрузчик
+                    hideLoadingOverlay();
+                    return; // Прерываем выполнение функции
+                }
 
                 // Обновляем приветствие
                 const greetingElement = document.querySelector('.greeting');
@@ -755,9 +937,28 @@
 
             } catch (error) {
                 console.error('Ошибка при загрузке данных клиента:', error);
-                // Показываем сообщение об ошибке в приветствии
-                const greetingElement = document.querySelector('.greeting');
-                greetingElement.textContent = 'Здравствуйте! Ошибка загрузки данных.';
+
+                // Проверяем тип ошибки
+                if (isJSONParseError(error)) {
+                    // Показываем модальное окно для незарегистрированных пользователей
+                    console.log('Обнаружена ошибка JSON parsing - пользователь не зарегистрирован');
+
+                    // Устанавливаем логотип вместо аватара для незарегистрированных пользователей
+                    const decorativeCircles = document.querySelector('.decorative-circles');
+                    if (decorativeCircles) {
+                        decorativeCircles.innerHTML = `
+                            <div class="avatar-container">
+                                <img src="images/logome.JPG" alt="Логотип" class="user-avatar">
+                            </div>
+                        `;
+                    }
+
+                    showModal();
+                } else {
+                    // Для других ошибок показываем сообщение в приветствии
+                    const greetingElement = document.querySelector('.greeting');
+                    greetingElement.textContent = 'Здравствуйте! Ошибка загрузки данных.';
+                }
 
                 // Скрываем загрузчик даже при ошибке
                 hideLoadingOverlay();
@@ -778,7 +979,7 @@
 
                 // Небольшая задержка для полной инициализации
                 setTimeout(() => {
-                    loadClientData().finally(() => {
+                    handleRedirect().finally(() => {
                         clearTimeout(fallbackTimer);
                     });
                 }, 100);
@@ -788,7 +989,7 @@
                     if (window.Telegram && window.Telegram.WebApp) {
                         window.Telegram.WebApp.ready();
                     }
-                    loadClientData().finally(() => {
+                    handleRedirect().finally(() => {
                         clearTimeout(fallbackTimer);
                     });
                 }, 500);
