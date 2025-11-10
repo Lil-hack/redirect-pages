@@ -977,12 +977,10 @@
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
 
-                // Небольшая задержка для полной инициализации
-                setTimeout(() => {
-                    handleRedirect().finally(() => {
-                        clearTimeout(fallbackTimer);
-                    });
-                }, 100);
+                // Вызываем handleRedirect без задержки
+                handleRedirect().finally(() => {
+                    clearTimeout(fallbackTimer);
+                });
             } else {
                 // Если API недоступен, пробуем еще раз через некоторое время
                 setTimeout(function() {
