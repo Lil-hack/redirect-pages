@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Telegram App - Личный кабинет</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <style>
         /* Reset and base styles */
         * {
@@ -255,6 +256,72 @@
             border-radius: 10px;
         }
 
+        /* Loading animation styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,107,230,0.95) 0%, rgba(154,255,241,0.95) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #000;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top: 6px solid #fff;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .loading-text {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Pulse animation for loading text */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .loading-text {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
         /* Responsive design */
         @media (max-width: 1199px) {
             .cabinet-container {
@@ -430,6 +497,15 @@
     </style>
 </head>
 <body>
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Загрузка...</div>
+            <div class="loading-subtitle">Подготовка личного кабинета</div>
+        </div>
+    </div>
+
     <div class="cabinet-container">
         <!-- Background decorative circle -->
         <div class="background-circle" aria-hidden="true"></div>
@@ -525,6 +601,48 @@
             return data;
         }
 
+        // Функция для скрытия загрузчика
+        function hideLoadingOverlay() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                // Полностью удаляем элемент через некоторое время для освобождения памяти
+                setTimeout(() => {
+                    overlay.remove();
+                }, 500);
+            }
+        }
+
+        // Функция для динамической загрузки QR код библиотеки
+        function loadQRCodeLibrary(callback) {
+            if (typeof qrcode !== 'undefined') {
+                callback(true);
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+            script.onload = function() {
+                console.log('QR код библиотека загружена динамически');
+                callback(true);
+            };
+            script.onerror = function() {
+                console.warn('Не удалось загрузить QR код библиотеку');
+                callback(false);
+            };
+            document.head.appendChild(script);
+        }
+
+        // Функция для отображения номера карты как текста (fallback для QR кода)
+        function showCardNumberAsText(container, cardNumber) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 20px; font-family: monospace; font-size: 18px; font-weight: bold; word-break: break-all;">
+                    ${cardNumber}
+                </div>
+            `;
+            container.classList.add('qr-container');
+        }
+
         async function loadClientData() {
             try {
                 // Получаем данные Telegram пользователя
@@ -568,36 +686,109 @@
                 // Генерируем QR код для cardNumber и заменяем bottom-square
                 const bottomSquare = document.querySelector('.bottom-square');
                 if (bottomSquare && data.cardNumber) {
-                    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(data.cardNumber)}`;
-                    bottomSquare.innerHTML = `
-                        <img src="${qrCodeUrl}" alt="QR код карты ${data.cardNumber}" class="qr-code">
-                    `;
-                    bottomSquare.classList.add('qr-container');
+                    // Функция для генерации QR кода
+                    const generateQRCode = () => {
+                        try {
+                            // Создаем canvas элемент для QR кода
+                            const canvas = document.createElement('canvas');
+                            canvas.className = 'qr-code';
+                            canvas.width = 400;
+                            canvas.height = 400;
+
+                            // Генерируем QR код с помощью qrcode-generator
+                            const qr = qrcode(0, 'M');
+                            qr.addData(data.cardNumber);
+                            qr.make();
+
+                            // Получаем контекст canvas и рисуем QR код
+                            const ctx = canvas.getContext('2d');
+                            const cellSize = 400 / qr.getModuleCount();
+                            const margin = 0;
+
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fillRect(0, 0, 400, 400);
+
+                            ctx.fillStyle = '#000000';
+                            for (let row = 0; row < qr.getModuleCount(); row++) {
+                                for (let col = 0; col < qr.getModuleCount(); col++) {
+                                    if (qr.isDark(row, col)) {
+                                        ctx.fillRect(
+                                            margin + col * cellSize,
+                                            margin + row * cellSize,
+                                            cellSize,
+                                            cellSize
+                                        );
+                                    }
+                                }
+                            }
+
+                            // Заменяем содержимое bottom-square на QR код
+                            bottomSquare.innerHTML = '';
+                            bottomSquare.appendChild(canvas);
+                            bottomSquare.classList.add('qr-container');
+                        } catch (error) {
+                            console.error('Ошибка при генерации QR кода:', error);
+                            showCardNumberAsText(bottomSquare, data.cardNumber);
+                        }
+                    };
+
+                    // Проверяем доступность библиотеки qrcode
+                    if (typeof qrcode !== 'undefined') {
+                        generateQRCode();
+                    } else {
+                        // Пытаемся загрузить библиотеку динамически
+                        loadQRCodeLibrary(function(success) {
+                            if (success) {
+                                generateQRCode();
+                            } else {
+                                console.warn('Не удалось загрузить библиотеку QR код, используем текстовый fallback');
+                                showCardNumberAsText(bottomSquare, data.cardNumber);
+                            }
+                        });
+                    }
                 }
+
+                // Скрываем загрузчик после успешной загрузки всех данных
+                hideLoadingOverlay();
 
             } catch (error) {
                 console.error('Ошибка при загрузке данных клиента:', error);
                 // Показываем сообщение об ошибке в приветствии
                 const greetingElement = document.querySelector('.greeting');
                 greetingElement.textContent = 'Здравствуйте! Ошибка загрузки данных.';
+
+                // Скрываем загрузчик даже при ошибке
+                hideLoadingOverlay();
             }
         }
 
         // Выполняем обработку при загрузке страницы
         window.addEventListener('load', function() {
+            // Устанавливаем резервный таймер на 10 секунд для скрытия загрузчика
+            const fallbackTimer = setTimeout(() => {
+                console.warn('Резервный таймер: скрываем загрузчик через 10 секунд');
+                hideLoadingOverlay();
+            }, 10000);
+
             // Инициализируем Telegram Web App
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
 
                 // Небольшая задержка для полной инициализации
-                setTimeout(loadClientData, 100);
+                setTimeout(() => {
+                    loadClientData().finally(() => {
+                        clearTimeout(fallbackTimer);
+                    });
+                }, 100);
             } else {
                 // Если API недоступен, пробуем еще раз через некоторое время
                 setTimeout(function() {
                     if (window.Telegram && window.Telegram.WebApp) {
                         window.Telegram.WebApp.ready();
                     }
-                    loadClientData();
+                    loadClientData().finally(() => {
+                        clearTimeout(fallbackTimer);
+                    });
                 }, 500);
             }
         });
