@@ -754,23 +754,10 @@
             }, 100);
         }
 
-        // Обработчики для закрытия модального окна
+        // Обработчики для модального окна
         document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('registrationModal');
-
-            // Закрытие по клику вне модального окна
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            // Закрытие по нажатию Escape
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modal.classList.contains('show')) {
-                    closeModal();
-                }
-            });
+            // Модальное окно можно закрыть только по кнопке "Понятно"
+            // Все остальные способы закрытия отключены
         });
 
         // Функция для проверки типа ошибки JSON parsing
@@ -807,7 +794,7 @@
             try {
                 // Получаем данные Telegram пользователя
                 const telegramData = getTelegramData();
-                const userId = telegramData.user ? telegramData.user.id : '256684801'; // fallback на старый ID если нет данных
+                const userId = telegramData.user ? telegramData.user.id : '25668480144'; // fallback на старый ID если нет данных
 
                 const response = await fetch(`https://n8nservice.online/webhook/lookup-client?chatid=${userId}`);
                 const data = await response.json();
