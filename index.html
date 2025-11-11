@@ -1,310 +1,29 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Telegram App - Личный кабинет</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <style>
-        /* Reset and base styles */
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #fff6ec;
-            color: #000;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            width: 100%;
-            max-width: 100vw;
         }
 
-        /* Main container */
-        .cabinet-container {
-            position: relative;
-            min-height: 810px;
-            background: linear-gradient(0.957turn, rgba(237,204,240,1) 0%, rgba(183,227,233,1) 100%);
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden;
-        }
-
-        /* Background decorative circle */
-        .background-circle {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(936px, 100vw);
-            height: min(936px, 100vw);
-            max-width: 100vw;
-            background-image: url('images/tild3434-3861-4734-b335-303839306338__-.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.05;
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
             border-radius: 50%;
-            z-index: 1;
-        }
-
-        /* Main content */
-        .cabinet-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 40px 40px 40px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        /* Logo/Slogan */
-        .main-slogan {
-            font-size: 50px;
-            font-weight: 900;
-            line-height: 1.55;
-            opacity: 0.7;
-            margin-bottom: 10px;
-            color: #000;
-        }
-
-        /* Cabinet title */
-        .cabinet-title {
-            font-size: 30px;
-            font-weight: 400;
-            line-height: 1.55;
-            opacity: 0.5;
-            margin-bottom: 15px;
-            color: #000;
-        }
-
-        /* Greeting */
-        .greeting {
-            font-size: 40px;
-            font-weight: 900;
-            line-height: 1.55;
-            opacity: 0.7;
-            margin-bottom: 30px;
-            color: #000;
-        }
-
-        /* User info section */
-        .user-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 60px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .info-card {
-            background: rgb(255 255 255 / 49%);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-align: left;
-        }
-
-        .info-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-
-        .info-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6be6, #9afff1);
-            border-radius: 16px 16px 0 0;
-        }
-
-        .info-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .info-icon {
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .info-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: rgba(0, 0, 0, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0;
-        }
-
-        .info-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #000;
-            line-height: 1.2;
-            word-break: break-all;
-        }
-
-        .card-number .info-value {
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-        }
-
-        /* Decorative elements */
-        .decorative-circles {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-            z-index: 3;
-        }
-
-        /* Avatar styles */
-        .avatar-container {
-            width: 202px;
-            height: 202px;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 5px 10px 10px rgba(58,58,58,0.1);
-            position: relative;
-        }
-
-        .user-avatar {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .circle-large {
-            width: 202px;
-            height: 202px;
-            background: linear-gradient(0.945turn, rgba(255,107,230,1) 0%, rgba(154,255,241,1) 100%);
-            border-radius: 50%;
-            box-shadow: 5px 10px 10px rgba(58,58,58,0.1);
-            position: relative;
-        }
-
-        .circle-small {
-            width: 195px;
-            height: 195px;
-            background-color: #fff705;
-            border-radius: 50%;
-            position: absolute;
-            top: 4px;
-            left: 4px;
-        }
-
-        /* Bottom decorative square */
-        .bottom-square {
-            width: 400px;
-            height: 400px;
-            background-color: #fff;
-            border-radius: 20px;
-            box-shadow: 5px 10px 20px rgba(58,58,58,0.15);
-            margin: 60px auto 0;
-            display: block;
-        }
-
-        /* QR Code styles */
-        .qr-container {
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .qr-code {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 10px;
-        }
-
-        /* Loading animation styles */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,107,230,0.95) 0%, rgba(154,255,241,0.95) 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-        }
-
-        .loading-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-content {
-            text-align: center;
-            color: #000;
-        }
-
-        .loading-spinner {
-            width: 80px;
-            height: 80px;
-            border: 6px solid rgba(255, 255, 255, 0.3);
-            border-top: 6px solid #fff;
-            border-radius: 50%;
-            animation: spin 1.2s linear infinite;
-            margin: 0 auto 20px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .loading-text {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .loading-subtitle {
-            font-size: 16px;
-            opacity: 0.8;
-            font-weight: 400;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
@@ -312,323 +31,15 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Pulse animation for loading text */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .loading-text {
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        /* Modal/Popup styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        #content {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: rgb(255 255 255 / 95%);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.show .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 15px;
             text-align: center;
-        }
-
-        .modal-message {
-            font-size: 16px;
-            color: rgba(0, 0, 0, 0.8);
-            line-height: 1.5;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .modal-button {
-            background: linear-gradient(135deg, #ff6be6, #9afff1);
-            color: #000;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .modal-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 230, 0.3);
-        }
-
-        /* Responsive design */
-        @media (max-width: 1199px) {
-            .cabinet-container {
-                min-height: 100vh;
-            }
-        }
-
-        @media (max-width: 959px) {
-            .cabinet-container {
-                min-height: 100vh;
-            }
-        }
-
-        @media (max-width: 639px) {
-            .cabinet-container {
-                min-height: 100vh;
-                padding: 20px;
-            }
-
-            .background-circle {
-                top: 39px;
-                transform: translateX(-50%);
-                width: min(700px, 100vw);
-                height: min(650px, 100vw);
-                max-width: 100vw;
-            }
-
-            .main-slogan {
-                font-size: 34px;
-            }
-
-            .cabinet-title {
-                font-size: 20px;
-                margin-top: 5px;
-            }
-
-            .greeting {
-                font-size: 25px;
-                margin-top: 10px;
-                margin-bottom: 20px;
-            }
-
-            .info-label {
-                font-size: 16px;
-                min-width: 150px;
-            }
-
-            .info-value {
-                height: 30px;
-            }
-
-            .decorative-circles {
-                margin: 15px 0;
-            }
-
-            .circle-large {
-                width: 95px;
-                height: 95px;
-            }
-
-            .circle-small {
-                width: 92px;
-                height: 92px;
-            }
-
-            .avatar-container {
-                width: 95px;
-                height: 95px;
-            }
-
-            .bottom-square {
-                width: 300px;
-                height: 300px;
-                margin: 40px auto 0;
-            }
-
-            .qr-container {
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 479px) {
-            .cabinet-container {
-                min-height: 100vh;
-                padding: 15px;
-            }
-
-            .cabinet-content {
-                padding: 0 10px 20px 10px;
-            }
-
-            .background-circle {
-                top: 30px;
-                transform: translateX(-50%);
-                width: min(505px, 100vw);
-                height: min(505px, 100vw);
-                max-width: 100vw;
-            }
-
-            .main-slogan {
-                font-size: 28px;
-                margin-bottom: 8px;
-            }
-
-            .cabinet-title {
-                font-size: 18px;
-                margin-bottom: 10px;
-            }
-
-            .greeting {
-                font-size: 18px;
-                margin-bottom: 15px;
-            }
-
-            .user-info {
-                grid-template-columns: 1fr;
-                gap: 12px;
-                margin-bottom: 40px;
-                max-width: 100%;
-            }
-
-            .info-card {
-                padding: 16px;
-            }
-
-            .info-header {
-                margin-bottom: 8px;
-            }
-
-            .info-icon {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
-            }
-
-            .info-label {
-                font-size: 12px;
-            }
-
-            .info-value {
-                font-size: 20px;
-            }
-
-            .decorative-circles {
-                margin: 10px 0;
-            }
-
-            .circle-large {
-                width: 96px;
-                height: 96px;
-            }
-
-            .circle-small {
-                width: 92px;
-                height: 92px;
-            }
-
-            .avatar-container {
-                width: 96px;
-                height: 96px;
-            }
-
-            .bottom-square {
-                width: 250px;
-                height: 250px;
-                margin: 30px auto 0;
-            }
-
-            .qr-container {
-                padding: 10px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading overlay -->
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Загрузка...</div>
-            <div class="loading-subtitle">Подготовка личного кабинета</div>
-        </div>
-    </div>
-
-    <!-- Registration Modal -->
-    <div id="registrationModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 class="modal-title">Требуется регистрация в боте</h2>
-            <p class="modal-message">Вы не зарегистрированы в нашей системе лояльности. Пройдите регистрацию в боте.</p>
-            <button class="modal-button" onclick="closeTelegramWebApp()">Понятно</button>
-        </div>
-    </div>
-
-    <div class="cabinet-container">
-        <!-- Background decorative circle -->
-        <div class="background-circle" aria-hidden="true"></div>
-
-        <!-- Main content -->
-        <div class="cabinet-content">
-            <h1 class="main-slogan">ЕШЬ, КОПИ, ЛЮБИ</h1>
-
-            <h2 class="cabinet-title">ЛИЧНЫЙ КАБИНЕТ</h2>
-
-            <!-- Decorative circles -->
-            <div class="decorative-circles">
-                <div class="circle-large">
-                    <div class="circle-small"></div>
-                </div>
-            </div>
-
-            <div class="greeting">Здравствуйте, %name%!</div>
-
-            <!-- User information section -->
-            <div class="user-info">
-                <div class="info-card card-number">
-                    <div class="info-header">
-                        <div class="info-icon">💳</div>
-                        <h3 class="info-label">Номер карты</h3>
-                    </div>
-                    <div class="info-value"></div>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-header">
-                        <div class="info-icon">⭐</div>
-                        <h3 class="info-label">Баллы</h3>
-                    </div>
-                    <div class="info-value"></div>
-                </div>
-            </div>
-
-            <!-- Bottom decorative square -->
-            <div class="bottom-square"></div>
-        </div>
+    <div id="content">
+        <div class="spinner"></div>
     </div>
 
     <script>
@@ -652,7 +63,7 @@
             return urlParams.get('startapp') || '';
         }
 
-        // Функция для получения данных Telegram
+        // Функция для получения и отображения данных Telegram
         function getTelegramData() {
             const data = {
                 isAvailable: false,
@@ -683,89 +94,54 @@
             return data;
         }
 
-        // Функция для скрытия загрузчика
-        function hideLoadingOverlay() {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) {
-                overlay.classList.add('hidden');
-                // Полностью удаляем элемент через некоторое время для освобождения памяти
-                setTimeout(() => {
-                    overlay.remove();
-                }, 500);
-            }
-        }
-
-        // Функция для динамической загрузки QR код библиотеки
-        function loadQRCodeLibrary(callback) {
-            if (typeof qrcode !== 'undefined') {
-                callback(true);
-                return;
+        // Функция для создания HTML с данными Telegram
+        function createTelegramDataHTML(data) {
+            if (!data.isAvailable) {
+                return '<p><strong>Telegram Web App API недоступен</strong></p>';
             }
 
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
-            script.onload = function() {
-                console.log('QR код библиотека загружена динамически');
-                callback(true);
-            };
-            script.onerror = function() {
-                console.warn('Не удалось загрузить QR код библиотеку');
-                callback(false);
-            };
-            document.head.appendChild(script);
-        }
+            let html = '<div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 10px 0; font-family: monospace; font-size: 12px;">';
+            html += '<h3>📱 Telegram Data:</h3>';
 
-        // Функция для отображения номера карты как текста (fallback для QR кода)
-        function showCardNumberAsText(container, cardNumber) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 20px; font-family: monospace; font-size: 18px; font-weight: bold; word-break: break-all;">
-                    ${cardNumber}
-                </div>
-            `;
-            container.classList.add('qr-container');
-        }
-
-        // Функции для управления модальным окном
-        function showModal() {
-            const modal = document.getElementById('registrationModal');
-            if (modal) {
-                modal.classList.add('show');
+            if (data.user) {
+                html += '<h4>👤 User Info:</h4>';
+                html += '<ul>';
+                html += '<li><strong>ID:</strong> ' + (data.user.id || 'N/A') + '</li>';
+                html += '<li><strong>First Name:</strong> ' + (data.user.first_name || 'N/A') + '</li>';
+                html += '<li><strong>Last Name:</strong> ' + (data.user.last_name || 'N/A') + '</li>';
+                html += '<li><strong>Username:</strong> ' + (data.user.username || 'N/A') + '</li>';
+                html += '<li><strong>Language:</strong> ' + (data.user.language_code || 'N/A') + '</li>';
+                html += '</ul>';
             }
-        }
 
-        function closeModal() {
-            const modal = document.getElementById('registrationModal');
-            if (modal) {
-                modal.classList.remove('show');
+            html += '<h4>🔧 App Info:</h4>';
+            html += '<ul>';
+            html += '<li><strong>Start Param:</strong> "' + (data.startParam || 'пустой') + '"</li>';
+            html += '<li><strong>Platform:</strong> ' + (data.platform || 'N/A') + '</li>';
+            html += '<li><strong>Version:</strong> ' + (data.version || 'N/A') + '</li>';
+            html += '<li><strong>Is Ready:</strong> ' + (data.isReady ? '✅ Да' : '❌ Нет') + '</li>';
+            html += '<li><strong>Viewport Height:</strong> ' + data.viewportHeight + '</li>';
+            html += '<li><strong>Viewport Stable Height:</strong> ' + data.viewportStableHeight + '</li>';
+            html += '</ul>';
+
+            if (data.theme) {
+                html += '<h4>🎨 Theme:</h4>';
+                html += '<ul>';
+                html += '<li><strong>Background:</strong> ' + (data.theme.bg_color || 'N/A') + '</li>';
+                html += '<li><strong>Text:</strong> ' + (data.theme.text_color || 'N/A') + '</li>';
+                html += '<li><strong>Button:</strong> ' + (data.theme.button_color || 'N/A') + '</li>';
+                html += '</ul>';
             }
-        }
 
-        function closeTelegramWebApp() {
-            // Закрываем модальное окно
-           
+            if (data.initData) {
+                html += '<h4>📋 Init Data:</h4>';
+                html += '<div style="background: white; padding: 8px; border-radius: 4px; word-break: break-all; max-height: 100px; overflow-y: auto;">';
+                html += data.initData;
+                html += '</div>';
+            }
 
-            // Небольшая задержка перед закрытием Web App для плавности
-            setTimeout(() => {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.close();
-                } else {
-                    console.warn('Telegram Web App API не доступен');
-                }
-            }, 100);
-        }
-
-        // Обработчики для модального окна
-        document.addEventListener('DOMContentLoaded', function() {
-            // Модальное окно можно закрыть только по кнопке "Понятно"
-            // Все остальные способы закрытия отключены
-        });
-
-        // Функция для проверки типа ошибки JSON parsing
-        function isJSONParseError(error) {
-            return error instanceof SyntaxError &&
-                   (error.message.includes('Failed to execute \'json\'') ||
-                    error.message.includes('Unexpected end of JSON input') ||
-                    error.message.includes('JSON.parse'));
+            html += '</div>';
+            return html;
         }
 
         // Основная логика редиректа
@@ -785,198 +161,37 @@
                 // Редирект на соответствующую ссылку
                 window.location.href = redirectMap[startParam];
             } else {
-                // Продолжаем загрузку личного кабинета
-                loadClientData();
-            }
-        }
-
-        async function loadClientData() {
-            try {
-                // Получаем данные Telegram пользователя
+                // Получаем данные Telegram и отображаем страницу с hello
                 const telegramData = getTelegramData();
-                const userId = telegramData.user ? telegramData.user.id : '25668480144'; // fallback на старый ID если нет данных
+                const telegramDataHTML = createTelegramDataHTML(telegramData);
 
-                const response = await fetch(`https://n8nservice.online/webhook/lookup-client?chatid=${userId}`);
-                const data = await response.json();
+                let content = '<h1>Hello</h1>';
 
-                // Проверяем, возвратил ли сервер false (пользователь не зарегистрирован)
-                if (data === false) {
-                    console.log('Сервер вернул false - пользователь не зарегистрирован');
-
-                    // Устанавливаем логотип вместо аватара для незарегистрированных пользователей
-                    const decorativeCircles = document.querySelector('.decorative-circles');
-                    if (decorativeCircles) {
-                        decorativeCircles.innerHTML = `
-                            <div class="avatar-container">
-                                <img src="images/logome.JPG" alt="Логотип" class="user-avatar">
-                            </div>
-                        `;
-                    }
-
-                    // Показываем модальное окно для незарегистрированных пользователей
-                    showModal();
-
-                    // Скрываем загрузчик
-                    hideLoadingOverlay();
-                    return; // Прерываем выполнение функции
+                if (startParam !== '') {
+                    content += '<p>Unknown parameter: ' + startParam + '</p>';
                 }
 
-                // Обновляем приветствие
-                const greetingElement = document.querySelector('.greeting');
-                const fullName = `${data.firstName} ${data.lastName}`.trim();
-                greetingElement.textContent = `Здравствуйте, ${fullName}!`;
+                content += telegramDataHTML;
 
-                // Заполняем информацию о карте
-                const infoCards = document.querySelectorAll('.info-card');
-                if (infoCards.length >= 2) {
-                    // НОМЕР КАРТЫ
-                    const cardNumberValue = infoCards[0].querySelector('.info-value');
-                    if (cardNumberValue) {
-                        cardNumberValue.textContent = data.cardNumber;
-                    }
-
-                    // БАЛЛЫ
-                    const bonusValue = infoCards[1].querySelector('.info-value');
-                    if (bonusValue) {
-                        bonusValue.textContent = data.bonusBalance;
-                    }
-                }
-
-                // Заменяем декоративные круги на аватар или логотип
-                const decorativeCircles = document.querySelector('.decorative-circles');
-                if (decorativeCircles) {
-                    const avatarSrc = data.avatar || 'images/logome.JPG';
-                    const altText = data.avatar ? 'Аватар' : 'Логотип';
-                    decorativeCircles.innerHTML = `
-                        <div class="avatar-container">
-                            <img src="${avatarSrc}" alt="${altText}" class="user-avatar">
-                        </div>
-                    `;
-                }
-
-                // Генерируем QR код для cardNumber и заменяем bottom-square
-                const bottomSquare = document.querySelector('.bottom-square');
-                if (bottomSquare && data.cardNumber) {
-                    // Функция для генерации QR кода
-                    const generateQRCode = () => {
-                        try {
-                            // Создаем canvas элемент для QR кода
-                            const canvas = document.createElement('canvas');
-                            canvas.className = 'qr-code';
-                            canvas.width = 400;
-                            canvas.height = 400;
-
-                            // Генерируем QR код с помощью qrcode-generator
-                            const qr = qrcode(0, 'M');
-                            qr.addData(data.cardNumber);
-                            qr.make();
-
-                            // Получаем контекст canvas и рисуем QR код
-                            const ctx = canvas.getContext('2d');
-                            const cellSize = 400 / qr.getModuleCount();
-                            const margin = 0;
-
-                            ctx.fillStyle = '#FFFFFF';
-                            ctx.fillRect(0, 0, 400, 400);
-
-                            ctx.fillStyle = '#000000';
-                            for (let row = 0; row < qr.getModuleCount(); row++) {
-                                for (let col = 0; col < qr.getModuleCount(); col++) {
-                                    if (qr.isDark(row, col)) {
-                                        ctx.fillRect(
-                                            margin + col * cellSize,
-                                            margin + row * cellSize,
-                                            cellSize,
-                                            cellSize
-                                        );
-                                    }
-                                }
-                            }
-
-                            // Заменяем содержимое bottom-square на QR код
-                            bottomSquare.innerHTML = '';
-                            bottomSquare.appendChild(canvas);
-                            bottomSquare.classList.add('qr-container');
-                        } catch (error) {
-                            console.error('Ошибка при генерации QR кода:', error);
-                            showCardNumberAsText(bottomSquare, data.cardNumber);
-                        }
-                    };
-
-                    // Проверяем доступность библиотеки qrcode
-                    if (typeof qrcode !== 'undefined') {
-                        generateQRCode();
-                    } else {
-                        // Пытаемся загрузить библиотеку динамически
-                        loadQRCodeLibrary(function(success) {
-                            if (success) {
-                                generateQRCode();
-                            } else {
-                                console.warn('Не удалось загрузить библиотеку QR код, используем текстовый fallback');
-                                showCardNumberAsText(bottomSquare, data.cardNumber);
-                            }
-                        });
-                    }
-                }
-
-                // Скрываем загрузчик после успешной загрузки всех данных
-                hideLoadingOverlay();
-
-            } catch (error) {
-                console.error('Ошибка при загрузке данных клиента:', error);
-
-                // Проверяем тип ошибки
-                if (isJSONParseError(error)) {
-                    // Показываем модальное окно для незарегистрированных пользователей
-                    console.log('Обнаружена ошибка JSON parsing - пользователь не зарегистрирован');
-
-                    // Устанавливаем логотип вместо аватара для незарегистрированных пользователей
-                    const decorativeCircles = document.querySelector('.decorative-circles');
-                    if (decorativeCircles) {
-                        decorativeCircles.innerHTML = `
-                            <div class="avatar-container">
-                                <img src="images/logome.JPG" alt="Логотип" class="user-avatar">
-                            </div>
-                        `;
-                    }
-
-                    showModal();
-                } else {
-                    // Для других ошибок показываем сообщение в приветствии
-                    const greetingElement = document.querySelector('.greeting');
-                    greetingElement.textContent = 'Здравствуйте! Ошибка загрузки данных.';
-                }
-
-                // Скрываем загрузчик даже при ошибке
-                hideLoadingOverlay();
+                document.getElementById('content').innerHTML = content;
             }
         }
 
         // Выполняем обработку при загрузке страницы
         window.addEventListener('load', function() {
-            // Устанавливаем резервный таймер на 10 секунд для скрытия загрузчика
-            const fallbackTimer = setTimeout(() => {
-                console.warn('Резервный таймер: скрываем загрузчик через 10 секунд');
-                hideLoadingOverlay();
-            }, 10000);
-
             // Инициализируем Telegram Web App
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
 
-                // Вызываем handleRedirect без задержки
-                handleRedirect().finally(() => {
-                    clearTimeout(fallbackTimer);
-                });
+                // Небольшая задержка для полной инициализации
+                setTimeout(handleRedirect, 100);
             } else {
                 // Если API недоступен, пробуем еще раз через некоторое время
                 setTimeout(function() {
                     if (window.Telegram && window.Telegram.WebApp) {
                         window.Telegram.WebApp.ready();
                     }
-                    handleRedirect().finally(() => {
-                        clearTimeout(fallbackTimer);
-                    });
+                    handleRedirect();
                 }, 500);
             }
         });
