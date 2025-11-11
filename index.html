@@ -10,6 +10,14 @@
 <body>
     <p>3Перенаправление на @loyalfood_bot...</p>
 
-   
+    <script>
+        // Проверяем, открыта ли страница в Telegram Web App
+        if (window.Telegram && window.Telegram.WebApp) {
+            // Если да, закрываем Web App после небольшой задержки
+            setTimeout(function() {
+                window.Telegram.WebApp.close();
+            }, 6000);
+        }
+    </script>
 </body>
 </html>
