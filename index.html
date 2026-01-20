@@ -35,8 +35,16 @@
     <div class="spinner"></div>
 
     <script>
+        // Функция для получения параметра из URL
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Получаем URL для редиректа из параметра
+        const redirectUrl = getUrlParameter('redirect') || 'https://t.me/loyalfood_bot?startapp';
+
         // Через 1 секунду выполняем редирект
-        window.location.href = 'https://t.me/loyalfood_bot?startapp';
         setTimeout(function() {
             // Если открыта в Telegram Web App, закрываем её
             if (window.Telegram && window.Telegram.WebApp) {
@@ -44,7 +52,7 @@
             }
 
             // Делаем редирект через JavaScript
-           
+            window.location.href = redirectUrl;
         }, 4000);
     </script>
 </body>
