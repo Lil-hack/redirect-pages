@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ выдачи Яндекс Карт: «Где поесть» на Шелепихинской наб., 34</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f2f5f7;
+            color: #1a1e24;
+            line-height: 1.5;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 40px -10px rgba(0,20,40,0.08);
+            padding: 36px 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #1a6f4b;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 4px 14px;
+            border-radius: 40px;
+            margin-left: 12px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #5c6b7a;
+            margin-bottom: 36px;
+            border-bottom: 1px solid #e6ecf0;
+            padding-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 20px 24px;
+            flex: 1 1 200px;
+            border: 1px solid #e9edf2;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f3150;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #5e6f7e;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 48px 0 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        .section-title span {
+            background: #d0e0e9;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1f3c4c;
+            margin-left: 14px;
+        }
+
+        .insight-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .insight-item {
+            background: #ffffff;
+            border: 1px solid #ecf0f3;
+            border-radius: 20px;
+            padding: 20px 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+            transition: all 0.1s;
+        }
+        .insight-item:hover {
+            border-color: #cbd6e0;
+            background: #fafdff;
+        }
+
+        .insight-highlight {
+            font-weight: 700;
+            color: #096b4a;
+            margin-right: 6px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 30px 0 20px;
+            border-radius: 18px;
+            border: 1px solid #eaeef2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14.5px;
+            background: white;
+        }
+
+        th {
+            background: #eef3f7;
+            font-weight: 600;
+            color: #1f3a4e;
+            padding: 16px 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #ecf0f4;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rating {
+            font-weight: 700;
+            color: #c45508;
+        }
+
+        .fire {
+            background: #fff0e0;
+            color: #b85e00;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .cold {
+            background: #e7edf0;
+            color: #41525c;
+            font-weight: 500;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+        }
+
+        .meta-tag {
+            background: #e1ecf4;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a5068;
+            display: inline-block;
+            margin: 2px 2px;
+        }
+
+        .footer-summary {
+            margin-top: 48px;
+            background: #f4fafd;
+            padding: 28px 32px;
+            border-radius: 24px;
+            color: #234;
+            border-left: 6px solid #1a6f4b;
+        }
+
+        .two-cols {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1 1 300px;
+        }
+
+        @media (max-width: 750px) {
+            .container { padding: 24px 20px; }
+            h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            🗺️ Анализ выдачи Яндекс Карт
+            <span class="badge">«Где поесть»</span>
+        </h1>
+        <div class="subtitle">
+            Локация: Шелепихинская набережная, 34 (ЖК «Сердце столицы») · 16 организаций · Москва
+        </div>
+
+        <!-- Блок быстрой статистики -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">16</div>
+                <div class="stat-label">заведений в выдаче</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15/16</div>
+                <div class="stat-label">находятся в ЖК «Сердце столицы»</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5.0</div>
+                <div class="stat-label">максимальный рейтинг (Vino, Surf, Cuteam)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1053</div>
+                <div class="stat-label">макс. отзывов (Ми Ам)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">9</div>
+                <div class="stat-label">кухонь мира в одном дворе</div>
+            </div>
+        </div>
+
+        <!-- ТОП-10 инсайтов и закономерностей -->
+        <div class="section-title">
+            🔍 ТОП-10 инсайтов и закономерностей
+            <span>рынок в миниатюре</span>
+        </div>
+
+        <div class="insight-list">
+            <div class="insight-item">
+                <span class="insight-highlight">1.</span> <strong>Ресторанный двор под открытым небом</strong> — все точки кроме подборки находятся по адресу наб. Шелепихинская, 34. ЖК «Сердце столицы» — мощнейший гастро-кластер.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">2.</span> <strong>Рейтинг — главный фильтр</strong> — при плотной конкуренции лидеры имеют 5.0 (Vino, Surf) и 4.7 с тысячей отзывов (Ми Ам). Новичкам без репутации сложнее, даже с рекламой.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">3.</span> <strong>Экспансия сетей и франшиз</strong> — Surf Coffee, Печорин, Ribambelle, Дринкит, Cuteam. Сетям проще заходить в новые ЖК.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">4.</span> <strong>Гастродиверсификация</strong> — грузинская, вьетнамская, итальянская, сербская, авторская, здоровая кухня. Весь мир в 200 метрах.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">5.</span> <strong>«Не едой единой»</strong> — Cuteam (бьюти-коворкинг) и FreshClass (продуктовый) в выдаче по запросу «поесть». Яндекс кросс-рубрицирует.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">6.</span> <strong>Доставка — necessity, не преимущество</strong> — почти все подключены к Еде, массово проставлен признак «Забота о курьерах» (чай/кофе/WC). Борьба за лояльность доставщиков.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">7.</span> <strong>Высокий средний чек</strong> — 1500–3000 ₽ в ресторанах. Премиум-ЖК диктует цены. Демократично только в кофейнях/пекарнях.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">8.</span> <strong>Геосервисная реклама</strong> — товарные сниппеты (Cake Home с ценой за 100г, Suluguni с кнопкой в Telegram, Cuteam с арендой). Прямой путь к брони.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">9.</span> <strong>Сегментация кофеен</strong> — имидж/дорого: Surf (220–300₽) и Saint Marie (280–420₽); доступный: Кофе Вай (120–200₽); кофе как доп. услуга: Cake Home, Печорин.
+            </div>
+            <div class="insight-item">
+                <span class="insight-highlight">10.</span> <strong>Семейный фокус</strong> — Ribambelle (№1, детская комната, анимация) и Suluguni (детская комната). ЖК заселён молодыми семьями, спрос закрыт.
+            </div>
+        </div>
+
+        <!-- Сравнительный анализ ключевых показателей -->
+        <div class="section-title">
+            📊 Сравнительный анализ ключевых показателей
+            <span>16 заведений</span>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Рейтинг</th>
+                        <th>Кол-во оценок</th>
+                        <th>Средний чек / Цена</th>
+                        <th>Кухня / Специфика</th>
+                        <th>USP / Особенность</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ми Ам</strong></td>
+                        <td>Кафе / Ресторан</td>
+                        <td><span class="rating">⭐4.7</span></td>
+                        <td><span class="fire">🔥 1053</span></td>
+                        <td>500–1500 ₽</td>
+                        <td>Азиатская, вьетнамская, японская</td>
+                        <td><span class="meta-tag">Народный выбор</span> <span class="meta-tag">Хорошее место</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vino e Cucina</strong></td>
+                        <td>Ресторан</td>
+                        <td><span class="rating">⭐5.0</span></td>
+                        <td>412</td>
+                        <td>1500–3000 ₽</td>
+                        <td>Итальянская, авторская</td>
+                        <td><span class="meta-tag">Премиум</span> <span class="meta-tag">Винотека</span> <span class="meta-tag">Хор.место</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Suluguni</strong></td>
+                        <td>Ресторан</td>
+                        <td><span class="rating">⭐4.4</span></td>
+                        <td>598</td>
+                        <td>1500–2500 ₽</td>
+                        <td>Грузинская</td>
+                        <td><span class="meta-tag">Хинкали</span> <span class="meta-tag">Банкеты</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Buba Mara</strong></td>
+                        <td>Ресторан</td>
+                        <td><span class="rating">⭐4.5</span></td>
+                        <td>538</td>
+                        <td><span class="fire">2100 ₽ (фикс)</span></td>
+                        <td>Сербская, европейская</td>
+                        <td><span class="meta-tag">Живая музыка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Only</strong></td>
+                        <td>Ресторан / Караоке</td>
+                        <td><span class="rating">⭐4.5</span></td>
+                        <td>769</td>
+                        <td>1500–2000 ₽</td>
+                        <td>Европейская</td>
+                        <td><span class="meta-tag">Караоке</span> <span class="meta-tag">Кальян</span> <span class="meta-tag">До 3:00</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Surf Coffee X Grain</strong></td>
+                        <td>Кофейня</td>
+                        <td><span class="rating">⭐5.0</span></td>
+                        <td>215</td>
+                        <td>Капучино 220–300₽</td>
+                        <td>Спешелти, европ.</td>
+                        <td><span class="meta-tag">Сеть</span> <span class="meta-tag">Хорошее место</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Печорин</strong></td>
+                        <td>Кафе / Пекарня</td>
+                        <td><span class="rating">⭐4.4</span></td>
+                        <td>245</td>
+                        <td>—</td>
+                        <td>Авторская, выпечка</td>
+                        <td><span class="meta-tag">Своя пекарня</span> <span class="meta-tag">Сеть</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cake Home</strong></td>
+                        <td>Кондитерская</td>
+                        <td><span class="rating">⭐4.4</span></td>
+                        <td><span class="cold">7 🔻</span></td>
+                        <td>299₽/100г</td>
+                        <td>Десерты, торты</td>
+                        <td><span class="meta-tag">Активная реклама</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ribambelle</strong></td>
+                        <td>Кафе</td>
+                        <td><span class="rating">⭐4.4</span></td>
+                        <td><span class="fire">🔥 1001</span></td>
+                        <td>—</td>
+                        <td>Европейская</td>
+                        <td><span class="meta-tag">Детское кафе №1</span> <span class="meta-tag">Анимация</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Saint Marie</strong></td>
+                        <td>Кофейня</td>
+                        <td><span class="rating">⭐4.9</span></td>
+                        <td><span class="cold">41 🔻</span></td>
+                        <td>Капучино 280–420₽</td>
+                        <td>ЗОЖ, авторская</td>
+                        <td><span class="meta-tag">Премиальный кофе</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Кофе Вай</strong></td>
+                        <td>Кофейня</td>
+                        <td><span class="rating">⭐4.6</span></td>
+                        <td>46</td>
+                        <td><span class="fire">Капучино 120–200₽</span></td>
+                        <td>Европейская</td>
+                        <td><span class="meta-tag">Самый доступный</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>FreshClass</strong></td>
+                        <td>Магазин / Кафе</td>
+                        <td><span class="rating">⭐4.5</span></td>
+                        <td>126</td>
+                        <td>1000–1500 ₽</td>
+                        <td>Европейская</td>
+                        <td><span class="meta-tag">Круглосуточно</span> <span class="meta-tag">Фермерское</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Бруско</strong></td>
+                        <td>Пиццерия</td>
+                        <td><span class="rating">⭐4.4</span></td>
+                        <td><span class="cold">12 🔻</span></td>
+                        <td>900–1300 ₽</td>
+                        <td>Итальянская</td>
+                        <td><span class="meta-tag">Акция 2+1</span> <span class="meta-tag">новичок</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cuteam</strong></td>
+                        <td>Бьюти-коворкинг</td>
+                        <td><span class="rating">⭐5.0</span></td>
+                        <td>51</td>
+                        <td>—</td>
+                        <td>Кофейня + услуги</td>
+                        <td><span class="meta-tag">Аренда места</span> <span class="meta-tag">кафе</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 8px; font-size: 13px; color: #4a6675;">
+            🔥 — сильная сторона / лидер; 🔻 — мало оценок (низкая статистика).
+        </div>
+
+        <!-- Дополнительные заметки по позиционированию -->
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 40px 0 20px;">
+            <div style="background: #f3f9fc; border-radius: 18px; padding: 24px; flex: 2;">
+                <h3 style="font-size: 20px; margin-bottom: 16px; display: flex; gap: 8px;">🏆 Лидеры по узнаваемости</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+                    <div style="background: white; border-radius: 16px; padding: 16px; flex: 1 1 180px;">
+                        <div style="font-weight: 700;">Ми Ам</div>
+                        <div style="font-size: 13px;">1053 отзыва, 4.7 — абсолютный лидер по фидбеку</div>
+                    </div>
+                    <div style="background: white; border-radius: 16px; padding: 16px; flex: 1 1 180px;">
+                        <div style="font-weight: 700;">Ribambelle</div>
+                        <div style="font-size: 13px;">1001 отзыв, главное семейное кафе</div>
+                    </div>
+                    <div style="background: white; border-radius: 16px; padding: 16px; flex: 1 1 180px;">
+                        <div style="font-weight: 700;">Vino e Cucina</div>
+                        <div style="font-size: 13px;">Идеальный рейтинг 5.0 в премиум-сегменте</div>
+                    </div>
+                </div>
+            </div>
+            <div style="background: #fbf5ec; border-radius: 18px; padding: 24px; flex: 1.2;">
+                <h3 style="font-size: 20px; margin-bottom: 16px;">🎯 Ценовые кластеры</h3>
+                <ul style="list-style-type: none;">
+                    <li style="margin-bottom: 12px;">🔹 <strong>Эконом (кофе/перекус):</strong> Кофе Вай, Печорин, Cake Home, Дринкит</li>
+                    <li style="margin-bottom: 12px;">🔸 <strong>Средний (900–1500₽):</strong> Ми Ам, Бруско, FreshClass</li>
+                    <li style="margin-bottom: 12px;">🔹 <strong>Высокий (1500–3000₽):</strong> Vino, Suluguni, Only, Buba Mara</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Резюме и итог -->
+        <div class="footer-summary">
+            <div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
+                <div style="font-size: 46px;">📌</div>
+                <div style="flex: 1;">
+                    <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">Резюме: портрет гастро-корта нового времени</h3>
+                    <p style="font-size: 16px; margin-bottom: 16px; max-width: 800px;">
+                        Яндекс Карты в этом запросе превращаются в <strong>навигатор по внутреннему двору ЖК</strong>. Пользователю не нужно искать — нужно сравнивать. 
+                        Ключевые драйверы выбора: <strong>рейтинг + количество отзывов</strong> (Ми Ам, Ribambelle), <strong>специализация</strong> (роллы/хинкали/кофе), 
+                        <strong>особенности</strong> (караоке, детская комната, круглосуточно). 
+                    </p>
+                    <p style="font-size: 16px;">
+                        Высокая плотность заведений порождает идеальную конкурентную среду: сетевые гиганты соседствуют с авторскими проектами, 
+                        а рекламные интеграции (товарные сниппеты) становятся неотъемлемой частью выдачи. 
+                        <strong>«Сердце столицы» — готовый food-молл под открытым небом.</strong>
+                    </p>
+                </div>
+            </div>
+            <div style="margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap;">
+                <span style="background: #1a6f4b; color: white; padding: 6px 18px; border-radius: 50px; font-size: 14px;">✅ 9 кухонь мира</span>
+                <span style="background: #1a5068; color: white; padding: 6px 18px; border-radius: 50px; font-size: 14px;">✅ 5 заведений с рейтингом 4.9+</span>
+                <span style="background: #7f4f24; color: white; padding: 6px 18px; border-radius: 50px; font-size: 14px;">✅ 70% имеют доставку</span>
+                <span style="background: #435b66; color: white; padding: 6px 18px; border-radius: 50px; font-size: 14px;">✅ 8 сетевых проектов</span>
+            </div>
+        </div>
+
+        <!-- Подпись аналитика (опционально) -->
+        <div style="margin-top: 36px; border-top: 1px solid #dfe8ed; padding-top: 24px; color: #3e5c6b; font-size: 14px; display: flex; justify-content: space-between;">
+            <span>Анализ на основе JSON-выдачи Яндекс Карт (запрос «Где поесть», Шелепихинская наб. 34)</span>
+            <span style="font-weight: 600;">дата анализа: 11.02.2026</span>
+        </div>
+    </div>
+</body>
+</html>
