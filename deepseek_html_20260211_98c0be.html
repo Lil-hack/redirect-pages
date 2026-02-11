@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>Бруско траттория · Конкурентная стратегия</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #faf9f7;
+            color: #1e1e1e;
+            line-height: 1.6;
+            padding: 40px 24px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
+            padding: 48px 40px;
+        }
+
+        /* типографика */
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: #1f2e2b;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 4px solid #e03a3a;
+            display: inline-block;
+            color: #1f2e2b;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 1.8rem;
+            margin-bottom: 0.75rem;
+            color: #2c3e3a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 i {
+            color: #c12d2d;
+            font-size: 1.5rem;
+        }
+
+        .subhead {
+            font-size: 1.1rem;
+            color: #5a6b68;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            border-left: 5px solid #e03a3a;
+            padding-left: 20px;
+            background: #fcf8f6;
+            padding: 16px 24px;
+            border-radius: 16px;
+        }
+
+        .badge {
+            background: #1f2e2b;
+            color: white;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        /* сетка и карточки */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px 24px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+            border: 1px solid #f0eeec;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: #d4b0a0;
+            box-shadow: 0 16px 28px rgba(224,58,58,0.06);
+        }
+
+        .stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c12d2d;
+            line-height: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+        }
+
+        th {
+            background: #1f2e2b;
+            color: white;
+            font-weight: 600;
+            padding: 16px 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 16px 12px;
+            background: white;
+            border-bottom: 1px solid #ece9e6;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            background: #fff2e9;
+            border-left: 6px solid #e03a3a;
+        }
+
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-bottom: 20px;
+        }
+
+        .swot-item {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid #f0eeec;
+        }
+
+        .swot-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .strength { color: #0a6847; }
+        .weakness { color: #b65b2a; }
+        .opportunity { color: #286f8c; }
+        .threat { color: #b13b3b; }
+
+        ul, ol {
+            padding-left: 1.6rem;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .step {
+            flex: 1 1 180px;
+            background: #fdfbf9;
+            border-radius: 20px;
+            padding: 24px 18px;
+            border: 1px solid #eae3df;
+            position: relative;
+        }
+
+        .step-number {
+            background: #e03a3a;
+            color: white;
+            font-weight: 800;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            margin-bottom: 16px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 4px;
+            background: #eac0b0;
+            margin: 30px 0 20px;
+            border-radius: 4px;
+        }
+
+        .footer-quote {
+            background: linear-gradient(145deg, #1f2e2b 0%, #1f3a35 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 28px;
+            margin-top: 48px;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .footer-quote i {
+            color: #ffc857;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 32px 20px; }
+            h1 { font-size: 1.8rem; }
+            .swot-grid { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .roadmap { flex-direction: column; }
+        }
+
+        .tooltip-icon {
+            color: #9a7b6b;
+            margin-left: 6px;
+            font-size: 0.9rem;
+        }
+
+        .price-tag {
+            background: #eef1ef;
+            border-radius: 40px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1f2e2b;
+        }
+
+        .italian-flag {
+            background: linear-gradient(90deg, #009246 0%, #009246 33%, #ffffff 33%, #ffffff 66%, #ce2b37 66%, #ce2b37 100%);
+            height: 8px;
+            width: 100px;
+            border-radius: 8px;
+            margin: 20px 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Хедер -->
+        <span class="badge"><i class="fas fa-utensils" style="margin-right: 8px;"></i> Стратегия 2026 · ЖК «Сердце столицы»</span>
+        <h1>Бруско траттория: <br>«Не ещё одна Италия, а своя гостиная»</h1>
+        <div class="subhead">
+            <i class="fas fa-map-pin" style="color: #e03a3a; margin-right: 12px;"></i> 
+            Гиперлокальная конкуренция — 25 заведений в радиусе 300 метров. Единственный итальянский ресторан с демократичным чеком, но нулевая репутация. 
+            Анализ данных Яндекс Карт (февраль 2026) и поисковых подсказок.
+        </div>
+        
+        <!-- Часть 1. Ландшафт конкурентов -->
+        <h2><i class="fas fa-crosshairs" style="font-size: 1.5rem; margin-right: 12px; color: #e03a3a;"></i> Поле битвы</h2>
+        
+        <div class="grid-2">
+            <div class="card">
+                <span style="background: #c12d2d20; padding: 8px 14px; border-radius: 40px; font-weight: 600; color: #b11f1f;"><i class="fas fa-trophy"></i> Прямой конкурент №1</span>
+                <h3 style="margin-top: 20px; margin-bottom: 0;">Vino e Cucina</h3>
+                <div style="display: flex; gap: 20px; margin: 16px 0;">
+                    <div><span class="stat">5.0</span> <span style="color: #6f6f6f;">★ (412)</span></div>
+                    <div><span class="stat">2000–3000₽</span></div>
+                </div>
+                <p style="color: #3f4a47;"><strong>Премиум-итальянцы</strong> · банкетный зал, свой алкоголь, депозит от 300к. Убить ценой невозможно.</p>
+                <div style="margin-top: 16px;"><i class="fas fa-shield-alt" style="color: #0a6847;"></i> Главная угроза — задавят акциями.</p></div>
+            </div>
+            <div class="card">
+                <span style="background: #2c5f2d20; padding: 8px 14px; border-radius: 40px; font-weight: 600; color: #1e5622;"><i class="fas fa-leaf"></i> Здоровье/авторское</span>
+                <h3 style="margin-top: 20px; margin-bottom: 0;">М2 Органик клуб</h3>
+                <div style="display: flex; gap: 20px; margin: 16px 0;">
+                    <div><span class="stat">4.8</span> <span style="color: #6f6f6f;">★ (568)</span></div>
+                    <div><span class="stat">1500–2000₽</span></div>
+                </div>
+                <p>Своя ферма, завтраки, правильное питание. Забирает аудиторию ЗОЖ.</p>
+            </div>
+        </div>
+        
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Заведение</th>
+                        <th>Рейтинг</th>
+                        <th>Ср. чек</th>
+                        <th>Ниша / риск для Brusco</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight">
+                        <td><strong>Бруско траттория</strong> (мы)</td>
+                        <td><strong style="color: #c12d2d;">4.4</strong> (12 отзывов)</td>
+                        <td>900–1300 ₽</td>
+                        <td style="background: #fff2e9;">Новичок · низкая репутация, но уникальная цена</td>
+                    </tr>
+                    <tr>
+                        <td>Vino e Cucina</td>
+                        <td>5.0 (412)</td>
+                        <td>1500–3000 ₽</td>
+                        <td>«Премиум-итальянцы» · высокая маржинальность</td>
+                    </tr>
+                    <tr>
+                        <td>ТокиоРим</td>
+                        <td>4.4 (262)</td>
+                        <td>1500–2500 ₽</td>
+                        <td>Япония+Италия · размывает аудиторию пасты</td>
+                    </tr>
+                    <tr>
+                        <td>Suluguni</td>
+                        <td>4.4 (598)</td>
+                        <td>1500–2500 ₽</td>
+                        <td>Грузинская кухня · оттягивает винные вечера</td>
+                    </tr>
+                    <tr>
+                        <td>Buba Mara</td>
+                        <td>4.5 (538)</td>
+                        <td>2100 ₽</td>
+                        <td>Живая музыка, европейская</td>
+                    </tr>
+                    <tr>
+                        <td><span style="font-weight:600;">Кофейни (Surf, Рожь, Дринкит, CuteamCoffee)</span></td>
+                        <td>4.9 – 5.0</td>
+                        <td>350–600₽ (капучино 220-300₽)</td>
+                        <td><span style="background: #f0c4b0; padding: 4px 10px; border-radius: 20px;">давят на завтраки и перекусы</span></td>
+                    </tr>
+                    <tr>
+                        <td>FreshClass</td>
+                        <td>4.5 (126)</td>
+                        <td>1000–1500₽</td>
+                        <td>Гастро-маркет + готовые блюда · «унеси домой»</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="background: #fcf4ef; border-radius: 20px; padding: 24px; margin: 30px 0;">
+            <i class="fas fa-exclamation-triangle" style="color: #b13b3b; font-size: 1.6rem; float: left; margin-right: 20px;"></i>
+            <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: 0;"><strong>Кейс «Скалка»</strong> (соседний ЖК) — идеальный антипример. Отзывы кричат о грубости персонала, конфликтах с собаками и падении качества десертов. <br>➡️ Ваше преимущество — стать <strong>«Анти-Скалкой»</strong>: дружелюбный dog‑friendly, идеальный тирамису.</p>
+        </div>
+
+        <!-- Часть 2. SWOT-анализ -->
+        <h2><i class="fas fa-chart-pie" style="margin-right: 12px; color: #e03a3a;"></i> SWOT: внутри и снаружи</h2>
+        <div class="swot-grid">
+            <div class="swot-item">
+                <div class="swot-title strength"><i class="fas fa-plus-circle" style="font-size: 1.8rem;"></i> Сильные стороны</div>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><i class="fas fa-check-circle" style="color: #0a6847; margin-right: 10px;"></i> <strong>Цена 900–1300₽</strong> — единственная Италия ниже 1500₽ в локации.</li>
+                    <li><i class="fas fa-check-circle" style="color: #0a6847; margin-right: 10px;"></i> Открытая кухня (шоу-элемент, доверие).</li>
+                    <li><i class="fas fa-check-circle" style="color: #0a6847; margin-right: 10px;"></i> Чистая специализация: «итальянская траттория» без фьюжн.</li>
+                    <li><i class="fas fa-check-circle" style="color: #0a6847; margin-right: 10px;"></i> Чистый лист репутации — можно создать всё с нуля.</li>
+                </ul>
+            </div>
+            <div class="swot-item">
+                <div class="swot-title weakness"><i class="fas fa-minus-circle" style="font-size: 1.8rem;"></i> Слабые стороны</div>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><i class="fas fa-exclamation-circle" style="color: #b65b2a; margin-right: 10px;"></i> <strong>Рейтинг 4.4 / всего 12 отзывов</strong> — нет социального доказательства.</li>
+                    <li><i class="fas fa-exclamation-circle" style="color: #b65b2a; margin-right: 10px;"></i> Размытый бренд: и кафе, и ресторан, и пиццерия.</li>
+                    <li><i class="fas fa-exclamation-circle" style="color: #b65b2a; margin-right: 10px;"></i> Отсутствие наработанной аудитории завтраков (кофейни сильнее).</li>
+                </ul>
+            </div>
+            <div class="swot-item">
+                <div class="swot-title opportunity"><i class="fas fa-lightbulb" style="font-size: 1.8rem;"></i> Возможности</div>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><i class="fas fa-arrow-up" style="color: #286f8c; margin-right: 10px;"></i> <strong>Ниша «Честная еда каждый день»</strong> — бизнес-ланч 490₽.</li>
+                    <li><i class="fas fa-arrow-up" style="color: #286f8c; margin-right: 10px;"></i> Коллаборации: Cuteam (бьюти-коворкинг) + FreshClass (фермерские продукты).</li>
+                    <li><i class="fas fa-arrow-up" style="color: #286f8c; margin-right: 10px;"></i> Семейные ужины — в ЖК много детей, конкурентных family‑форматов почти нет.</li>
+                    <li><i class="fas fa-arrow-up" style="color: #286f8c; margin-right: 10px;"></i> Стать «оплотом» для курьеров — бесплатная вода, зарядка, сарафан.</li>
+                </ul>
+            </div>
+            <div class="swot-item">
+                <div class="swot-title threat"><i class="fas fa-bolt" style="font-size: 1.8rem;"></i> Угрозы</div>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><i class="fas fa-skull" style="color: #b13b3b; margin-right: 10px;"></i> Vino e Cucina может запустить демпинг‑ланчи и задавить бюджетом.</li>
+                    <li><i class="fas fa-skull" style="color: #b13b3b; margin-right: 10px;"></i> Кофейни выигрывают утро — низкий порог входа.</li>
+                    <li><i class="fas fa-skull" style="color: #b13b3b; margin-right: 10px;"></i> Репутационный риск: собаки, персонал (пример «Скалки»).</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Часть 3. Стратегия выделения -->
+        <div class="italian-flag"></div>
+        <h2 style="margin-top: 20px;"><i class="fas fa-flag-checkered" style="margin-right: 12px;"></i> Стратегия: «Траттория у дома»</h2>
+        <p style="font-size: 1.2rem; font-weight: 500; margin-bottom: 30px;">Не пытайтесь быть дешёвым Vino. Станьте своим.</p>
+        
+        <div class="grid-2">
+            <div class="card" style="background: #fef9f5;">
+                <h3><i class="fas fa-pizza-slice" style="color: #c12d2d;"></i> Продукт — хит-парад</h3>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>10–12 идеальных позиций</strong>. Никакого фьюжна.</li>
+                    <li>Паста: только Карбонара, Болоньезе, Четыре сыра.</li>
+                    <li>Пицца: Маргарита, Пепперони, Четыре сыра.</li>
+                    <li><span style="background: #e03a3a; color: white; padding: 4px 10px; border-radius: 20px;">★ Флагман: Тирамису</span> — лучший в ЖК.</li>
+                </ul>
+            </div>
+            <div class="card" style="background: #f5f3ef;">
+                <h3><i class="fas fa-tag"></i> Ценовая архитектура</h3>
+                <ul>
+                    <li><strong>Бизнес-ланч 490₽</strong> (суп+паста/пицца+напиток) — Vino не может опуститься.</li>
+                    <li><strong>Семейный сет выходного дня</strong> (пицца 40см + 4 закуски + лимонад) — дешевле, чем заказ по отдельности.</li>
+                    <li>Средний чек 900–1300₽ — не повышать, закрепить репутацию «доступно».</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card" style="background: #fcf5ee;">
+                <h3><i class="fas fa-dog"></i> Работа с возражениями — «Анти-Скалка»</h3>
+                <ul>
+                    <li><strong style="color: #964b00;">Dog-friendly</strong>: миска воды, печенье, приветливая встреча. Наклейка на входе.</li>
+                    <li><strong>Один идеальный десерт</strong> — тирамису по воскресеньям «как у мамы».</li>
+                    <li>Персонал: найм «хозяина зала» (эмпатия, а не формализм).</li>
+                    <li>Чёткая политика «да, с собакой можно» — без исключений.</li>
+                </ul>
+            </div>
+            <div class="card" style="background: #edf2ef;">
+                <h3><i class="fas fa-hand-holding-heart"></i> Маркетинг территории</h3>
+                <ul>
+                    <li><i class="fas fa-child"></i> Детские мастер-классы «Пицца-котик» (500₽ дешевле, чем у М2).</li>
+                    <li><i class="fas fa-cut"></i> Коллаборация с Cuteam: чек из бьюти-коворкинга = скидка 10% на десерт.</li>
+                    <li><i class="fas fa-bicycle"></i> «Забота о курьерах» — бесплатная вода, зарядка, WC. Курьеры станут вашими амбассадорами.</li>
+                    <li><i class="fas fa-book"></i> Полка буккроссинга / обмен растениями — создаём «своё» место.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="background: #eae2d7; border-radius: 20px; padding: 28px; margin-top: 30px;">
+            <h3 style="margin-top: 0;"><i class="fas fa-tv"></i> Технический дроп — шоу открытой кухни</h3>
+            <p style="margin-bottom: 0;">Повесьте монитор/планшет с трансляцией приготовления фирменной пасты. Создайте доверие и «эффект присутствия» — ни один конкурент в ЖК этого не делает. Бесплатный вау-фактор.</p>
+        </div>
+        
+        <!-- Дорожная карта -->
+        <h2 style="margin-top: 40px;"><i class="fas fa-road" style="margin-right: 12px;"></i> Дорожная карта: первые 60 дней</h2>
+        <div class="roadmap">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4 style="margin-bottom: 10px; font-weight: 700;">Неделя 1–2</h4>
+                <p style="color: #2e3a37;">✗ Урезать меню до 12 хитов.<br>✗ Ввести ланч 490₽.<br>✗ Один десерт (тирамису).<br>✗ Наклейка Dog‑friendly.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4 style="margin-bottom: 10px; font-weight: 700;">Неделя 3</h4>
+                <p>✗ Акция для курьеров (вода/кофе).<br>✗ Договор с Cuteam / FreshClass.<br>✗ Первый пост о «новом меню».</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4 style="margin-bottom: 10px; font-weight: 700;">Месяц 2</h4>
+                <p>✗ Мастер-класс для детей.<br>✗ Запуск «Семейного сета».<br>✗ Ответы на негативные отзывы → приглашение на десерт.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h4 style="margin-bottom: 10px; font-weight: 700;">Постоянно</h4>
+                <p>✗ Собирать отзывы, благодарить гостей.<br>✗ Поддерживать рейтинг выше 4.7.<br>✗ Быть «местным баром».</p>
+            </div>
+        </div>
+
+        <!-- Итоговая табличка с цифрами -->
+        <div style="margin: 48px 0 20px; background: linear-gradient(105deg, #fcf3ef 0%, #fffbf9 100%); border-radius: 32px; padding: 32px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
+                <div style="min-width: 200px;">
+                    <span style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #5a4c45;">Ключевой показатель</span>
+                    <div style="font-size: 3rem; font-weight: 800; color: #1f2e2b;">4.8</div>
+                    <span>целевой рейтинг через 3 месяца</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #5a4c45;">Ниша</span>
+                    <div style="font-size: 2rem; font-weight: 700;">«Честная траттория»</div>
+                    <span style="color: #3f5852;">Доступная Италия каждый день</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Заключение цитатой -->
+        <div class="footer-quote">
+            <i class="fas fa-quote-left" style="font-size: 2rem; opacity: 0.5; margin-right: 16px;"></i>
+            В ЖК «Сердце столицы» уже есть место для банкетов, есть для органической еды, есть для суши. 
+            <span style="background: #e6736b; padding: 4px 12px; border-radius: 40px; color: white; font-weight: 600;">Нет места, куда можно спуститься в тапках и съесть честную пасту за 500₽.</span>
+            <br><br>Станьте этим местом.
+            <div style="margin-top: 30px; font-weight: 300; opacity: 0.9;">На основе анализа 25 заведений, отзывов и скрытых возможностей</div>
+        </div>
+
+        <!-- Подвал -->
+        <div style="display: flex; justify-content: space-between; margin-top: 30px; color: #7a8a85; font-size: 0.85rem; border-top: 1px solid #e0dbd6; padding-top: 28px;">
+            <span><i class="fas fa-chart-line"></i> данные Яндекс Карт, 11.02.2026</span>
+            <span>Стратегия «Бруско» — гиперлокальный перехват</span>
+        </div>
+    </div>
+</body>
+</html>
