@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>Bijou · Аналитика и стратегия</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f9f7f5;
+            color: #1e1e1e;
+            line-height: 1.6;
+            padding: 32px 24px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.08);
+            padding: 48px 40px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 550;
+            letter-spacing: -0.01em;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            color: #0a1a2b;
+            border-left: 8px solid #ab8e5c;
+            padding-left: 24px;
+        }
+
+        .subhead {
+            font-size: 1.1rem;
+            color: #4a4e5c;
+            margin-bottom: 40px;
+            margin-top: 8px;
+            padding-left: 32px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            color: #2b2f3b;
+            border-bottom: 2px solid #eae4dd;
+            padding-bottom: 12px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 32px 0 16px 0;
+            color: #3d424f;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #2e323a;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ab8e5c;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 8px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 16px;
+        }
+
+        .card {
+            background: #f6f4f1;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .strength, .weakness, .opportunity, .threat {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .strength li::before, .weakness li::before, .opportunity li::before, .threat li::before {
+            content: "●";
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5em;
+            margin-left: -1.5em;
+        }
+
+        .strength li::before { color: #2a7a3e; }
+        .weakness li::before { color: #b13b3b; }
+        .opportunity li::before { color: #2b6f9c; }
+        .threat li::before { color: #c17b2c; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0 16px;
+            font-size: 0.9rem;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        th {
+            background: #1e232f;
+            color: white;
+            font-weight: 500;
+            padding: 14px 8px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #edebe9;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            background: #fef5e7;
+            border-left: 4px solid #ab8e5c;
+            padding: 20px 28px;
+            border-radius: 16px;
+            margin: 32px 0;
+        }
+
+        .columns-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .footer-note {
+            margin-top: 56px;
+            padding-top: 24px;
+            border-top: 1px solid #e0dbd5;
+            font-size: 0.85rem;
+            color: #5a5f6b;
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            .container { padding: 28px 20px; }
+            h1 { font-size: 1.8rem; }
+            .grid-2, .columns-2 { grid-template-columns: 1fr; }
+            table { display: block; overflow-x: auto; }
+        }
+
+        .bullet-list {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+
+        .bullet-list li {
+            margin-bottom: 6px;
+        }
+
+        .tag {
+            background: #eae4dd;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2e2e2e;
+            display: inline-block;
+            margin: 2px 4px 2px 0;
+        }
+
+        .value-big {
+            font-size: 2.2rem;
+            font-weight: 600;
+            line-height: 1;
+            color: #0a1a2b;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ЗАГОЛОВОК -->
+    <h1>Bijou · анализ и стратегия</h1>
+    <div class="subhead">Французский гастробар у Белорусской — вечерняя уникальность в плотной конкурентной среде</div>
+
+    <!-- БЛОК 1 – КОНТЕКСТ -->
+    <section>
+        <h2>1. Контекст и позиционирование Bijou</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 16px;">
+            <span class="badge">вечерний формат 18:00–03:00</span>
+            <span class="badge" style="background: #4a6572;">средний чек 1500–2500 ₽</span>
+            <span class="badge" style="background: #886f4c;">французская кухня</span>
+            <span class="badge" style="background: #2e5c4e;">Хорошее место 2025</span>
+        </div>
+        <div class="grid-2">
+            <div class="card" style="background: #f3f0ed;">
+                <div style="font-size: 1.5rem; margin-bottom: 4px;">⏳</div>
+                <h3 style="margin: 0 0 8px 0; font-size: 1.2rem;">График работы</h3>
+                <p style="margin: 0;">пн–чт 18:00–01:00, пт–сб 18:00–03:00, вс 18:00–01:00</p>
+                <p style="margin-top: 12px; color: #0c5d4b;"><strong>Уникальность:</strong> единственный вечерний гастробар в районе, старт после 18:00</p>
+            </div>
+            <div class="card" style="background: #f3f0ed;">
+                <div style="font-size: 1.5rem; margin-bottom: 4px;">🍷</div>
+                <h3 style="margin: 0 0 8px 0; font-size: 1.2rem;">Ключевые активы</h3>
+                <p style="margin: 0;">⭐ рейтинг 4,8 (1032 оценки)<br>🥇 награда «Хорошее место»<br>📈 315+ отзывов о напитках, 228 – о коктейлях<br>✅ подтверждённый владелец, банкетный зал</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 2 – SWIFT‑АНАЛИЗ КОНКУРЕНТОВ (таблица) -->
+    <section>
+        <h2>2. Конкурентный ландшафт (Белорусская / Тверская‑Ямская)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Заведение</th>
+                    <th>Тип / кухня</th>
+                    <th>Ср. чек (₽)</th>
+                    <th>График</th>
+                    <th>Рейтинг</th>
+                    <th>Комментарий</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: #fef3d7; font-weight: 550;">
+                    <td><strong>Bijou</strong></td>
+                    <td>французская, гастробар</td>
+                    <td>1500–2500</td>
+                    <td><span style="background: #ab8e5c20; padding: 2px 8px; border-radius: 12px;">18:00–03:00</span></td>
+                    <td>4,8</td>
+                    <td>вечерний, коктейли, «Хорошее место»</td>
+                </tr>
+                <tr><td>Dizengof/99</td><td>еврейская, восточная</td><td>—</td><td>09:00–23:00</td><td>4,9</td><td>доставка, детское меню</td></tr>
+                <tr><td>Myst</td><td>европейская, бар</td><td>от 2000</td><td>12:00–02:00</td><td>4,7</td><td>танцпол, DJ, веранда</td></tr>
+                <tr><td>Sage</td><td>авторская, премиум</td><td>3900</td><td>09:00–00:00</td><td>4,9</td><td>Ultima Guide, Bib Gourmand</td></tr>
+                <tr><td>Рыба моя</td><td>рыбная, средиземноморская</td><td>3000–3500</td><td>12:00–00:00</td><td>4,9</td><td>веранда, фестивали вина</td></tr>
+                <tr><td>Eva</td><td>греческая</td><td>2000–3000</td><td>08:00–00:00</td><td>4,9</td><td>Bib Gourmand, Ultima</td></tr>
+                <tr><td>Старик и море</td><td>рыбная, европейская</td><td>1000–1500</td><td>11:00–23:00</td><td>4,8</td><td>бронь, доступно</td></tr>
+                <tr><td>Self Edge Japanese</td><td>японская премиум</td><td>4000–6000</td><td>13:00–23:00</td><td>5,0</td><td>омакасе, дорого</td></tr>
+                <tr><td>J'Pan</td><td>японское бистро</td><td>1200–1500</td><td>11:00–23:00</td><td>5,0</td><td>веранда</td></tr>
+                <tr><td>Osso</td><td>итальянская</td><td>—</td><td>09:00–00:00</td><td>4,8</td><td>доступная среда</td></tr>
+                <tr><td>The Бык</td><td>мясная, бургеры</td><td>700–1400</td><td>12:00–23:00</td><td>5,0</td><td>10k+ оценок</td></tr>
+                <tr><td>Булка</td><td>авторская, пекарня</td><td>1500–2500</td><td>08:00–23:00</td><td>4,4</td><td>своя пекарня</td></tr>
+            </tbody>
+        </table>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;">
+            <span class="tag">⏰ Bijou — единственный с вечерним стартом</span>
+            <span class="tag">🇫🇷 французская кухня — редкая специализация</span>
+            <span class="tag">🍸 сильная коктейльная экспертиза</span>
+            <span class="tag">🌿 у 5+ конкурентов есть летняя веранда (у Bijou — нет)</span>
+        </div>
+    </section>
+
+    <!-- БЛОК 3 – SWOT (две колонки) -->
+    <section>
+        <h2>3. SWOT‑анализ Bijou</h2>
+        <div class="grid-2">
+            <!-- сильные стороны -->
+            <div class="card" style="background: #e5f0e8;">
+                <h3 style="margin-top: 0; color: #1f5e3a;">✅ Сильные стороны</h3>
+                <ul class="strength" style="padding-left: 1.5em;">
+                    <li>Уникальный вечерний/ночной график (18:00–03:00)</li>
+                    <li>Редкая французская кухня в районе</li>
+                    <li>Высокий рейтинг 4,8 и награда «Хорошее место 2025»</li>
+                    <li>Развитая коктейльная культура (отзывы о коктейлях – 228)</li>
+                    <li>Подтверждённый владелец, банкетный зал</li>
+                </ul>
+            </div>
+            <!-- слабые стороны -->
+            <div class="card" style="background: #fdeae9;">
+                <h3 style="margin-top: 0; color: #a13333;">⚠️ Слабые стороны</h3>
+                <ul class="weakness" style="padding-left: 1.5em;">
+                    <li>Короткое окно работы (нет дневной аудитории)</li>
+                    <li>Меньше отзывов, чем у лидеров (The Бык – 10к+)</li>
+                    <li>Отсутствие летней веранды</li>
+                    <li>Нет доставки еды</li>
+                    <li>Нет завтраков / бизнес-ланчей</li>
+                    <li>Нет престижных гидов (Мишлен, Ultima)</li>
+                </ul>
+            </div>
+            <!-- возможности -->
+            <div class="card" style="background: #e3ecf5;">
+                <h3 style="margin-top: 0; color: #1f6390;">🚀 Возможности</h3>
+                <ul class="opportunity" style="padding-left: 1.5em;">
+                    <li>Усилить позиционирование «вечернего французского бара»</li>
+                    <li>Развить событийный маркетинг (дегустации, музыка, коллаборации)</li>
+                    <li>Запустить летнюю веранду (сезонный трафик)</li>
+                    <li>Доставка премиальных позиций (вино, сыры, закуски)</li>
+                    <li>Сотрудничество с театрами и концертными залами</li>
+                    <li>Французские бранчи по выходным</li>
+                </ul>
+            </div>
+            <!-- угрозы -->
+            <div class="card" style="background: #fff2df;">
+                <h3 style="margin-top: 0; color: #b45a2c;">⚠️ Угрозы</h3>
+                <ul class="threat" style="padding-left: 1.5em;">
+                    <li>Конкуренты расширяют часы в ночь (Myst до 2:00)</li>
+                    <li>Появление новых французских проектов</li>
+                    <li>Снижение трафика в сегменте «выше среднего»</li>
+                    <li>Усиление премиум-конкурентов (Sage, Self Edge)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 4 – ИДЕИ И ВАРИАНТЫ ВЫДЕЛЕНИЯ -->
+    <section>
+        <h2>4. Идеи и варианты выделения Bijou</h2>
+        
+        <div class="columns-2">
+            <div style="background: #fbfaf8; padding: 16px 20px; border-radius: 20px;">
+                <h3 style="margin-top: 0; display: flex; gap: 10px;">🎯 Концептуальные решения</h3>
+                <ul class="bullet-list">
+                    <li><strong>«Ночь в Париже»</strong> – слоган и атмосфера, единственное место с луковым супом после 23:00.</li>
+                    <li><strong>Bijou After Dark</strong> – еженедельные приглашённые бартендеры, коктейльный паспорт.</li>
+                    <li><strong>Французские ужины с сомелье</strong> (винный пейринг, региональные вина).</li>
+                    <li><strong>Партнёрство с театрами</strong> – скидка 15% по билету.</li>
+                    <li><strong>Bijou Bar Takeover</strong> – гостевые бары из других городов.</li>
+                </ul>
+            </div>
+            <div style="background: #fbfaf8; padding: 16px 20px; border-radius: 20px;">
+                <h3 style="margin-top: 0;">🍽️ Меню и продукт</h3>
+                <ul class="bullet-list">
+                    <li><strong>Французская классика с твистом</strong> – тартар фламбе, буйабес, кок-о-вен, гратен дофинуа.</li>
+                    <li><strong>Коктейли на дижестивах</strong> (кальвадос, арманьяк, шартрез).</li>
+                    <li><strong>Устричная стойка</strong> – премиальная позиция.</li>
+                    <li><strong>Сет Dégustation</strong> – 5–7 подач с винным сопровождением.</li>
+                </ul>
+            </div>
+            <div style="background: #fbfaf8; padding: 16px 20px; border-radius: 20px;">
+                <h3 style="margin-top: 0;">✨ Атмосфера и сервис</h3>
+                <ul class="bullet-list">
+                    <li>Винтажный французский шик, фотозона, неон.</li>
+                    <li><strong>La cave</strong> – открытый винный погреб с консультациями.</li>
+                    <li>Персонализация: запоминать любимые коктейли гостя.</li>
+                </ul>
+            </div>
+            <div style="background: #fbfaf8; padding: 16px 20px; border-radius: 20px;">
+                <h3 style="margin-top: 0;">📱 Digital‑присутствие</h3>
+                <ul class="bullet-list">
+                    <li>Активные сторис «закулисье»: создание коктейлей, поставка устриц.</li>
+                    <li>SEO‑оптимизация в Яндекс Картах (фото, анонсы событий).</li>
+                    <li>Тизерные кампании: «18:00 – время Bijou».</li>
+                </ul>
+            </div>
+        </div>
+        <div style="background: #efeae3; border-radius: 20px; padding: 20px; margin-top: 16px;">
+            <span style="font-size: 1.8rem; margin-right: 12px;">🌿</span>
+            <strong>Сезонный драйвер:</strong> запуск летней веранды (конкуренты активно используют) — быстрая возможность увеличить трафик в тёплый сезон.
+        </div>
+    </section>
+
+    <!-- БЛОК 5 – ПЛАТЁЖНЫЙ ПОРТРЕТ -->
+    <section>
+        <h2>5. Платёжный портрет посетителей Bijou</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 16px;">
+            <div style="flex: 1; min-width: 200px;">
+                <div class="value-big">25–45</div>
+                <div style="color: #555; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">возраст</div>
+                <div style="margin-top: 12px;"><span style="background: #1e232f; color: white; padding: 2px 14px; border-radius: 20px;">55% Ж</span> <span style="background: #1e232f; color: white; padding: 2px 14px; border-radius: 20px; margin-left: 6px;">45% М</span></div>
+            </div>
+            <div style="flex: 1;">
+                <div class="value-big">100–200k ₽</div>
+                <div style="color: #555; font-size: 0.8rem;">доход в месяц</div>
+                <div style="margin-top: 12px;"><span class="tag">офисные сотрудники</span><span class="tag">творческие профессии</span></div>
+            </div>
+            <div style="flex: 1;">
+                <div class="value-big">1,5–2 ч</div>
+                <div style="color: #555; font-size: 0.8rem;">средняя длительность визита</div>
+                <div style="margin-top: 8px;"><span class="tag">романтический ужин 40%</span><span class="tag">встреча с друзьями 35%</span></div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 4px;">💳 Способы оплаты (оценка)</h3>
+        <table style="width: auto; min-width: 60%; margin-bottom: 24px;">
+            <tr><th style="background: #4f5b66;">Метод</th><th style="background: #4f5b66;">Доля</th><th style="background: #4f5b66;">Тренд</th></tr>
+            <tr><td>Банковские карты (NFC)</td><td>≈75%</td><td>📈 база</td></tr>
+            <tr><td>СБП / QR‑код</td><td>≈15%</td><td>🚀 активно растёт (25–35 лет)</td></tr>
+            <tr><td>Наличные</td><td>≈8%</td><td>📉 возраст 45+</td></tr>
+            <tr><td>Предоплата онлайн</td><td>≈2%</td><td>потенциал</td></tr>
+        </table>
+
+        <div class="grid-2" style="margin-bottom: 16px;">
+            <div class="card" style="background: #f4f2ef;">
+                <h4 style="margin-top: 0;">📊 Распределение среднего чека</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding: 8px 0;"><span>🍷 1500–1800 ₽</span> <strong>45%</strong> (ужин без алкоголя / лёгкие закуски)</li>
+                    <li style="display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding: 8px 0;"><span>🥂 1800–2500 ₽</span> <strong>40%</strong> (ужин + 1–2 коктейля)</li>
+                    <li style="display: flex; justify-content: space-between; padding: 8px 0;"><span>🍾 >2500 ₽</span> <strong>15%</strong> (сеты, вино, компании)</li>
+                </ul>
+            </div>
+            <div class="card" style="background: #f4f2ef;">
+                <h4 style="margin-top: 0;">💎 Безналичные чаевые</h4>
+                <p><span style="font-size: 2rem; font-weight: 600;">30%</span> посетителей оставляют чаевые <br>средний размер <strong>7–10%</strong> от счета</p>
+                <p style="margin-top: 8px;">Сервис: <span class="tag">Netmonet</span></p>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <h4 style="margin-top: 0; color: #1e232f;">🎯 Рекомендации для платёжных сервисов и маркетинга</h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                <li>✅ Продвигать оплату по QR‑коду на каждом столе – промо «СБП — коктейль в подарок».</li>
+                <li>✅ Внедрить программу лояльности: кешбэк баллами, накопление за безналичную оплату.</li>
+                <li>✅ Стимулировать безналичные чаевые: напоминание в чеке, отдельный QR.</li>
+                <li>✅ Запустить предзаказ навынос с онлайн-оплатой (увеличит средний чек).</li>
+                <li>✅ Таргетинг на аудиторию «активные пользователи СБП» и «премиальные карты».</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- БЛОК 6 – ИТОГОВЫЕ РЕКОМЕНДАЦИИ (таблица/список) -->
+    <section>
+        <h2>6. Итоговые рекомендации — быстрые победы</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+            <div style="background: #0a1a2b; color: white; padding: 24px; border-radius: 20px;">
+                <div style="font-size: 2rem;">🇫🇷</div>
+                <h3 style="color: white; margin: 8px 0 12px;">УТП</h3>
+                <p style="color: #eae4dd;">Закрепить позицию «единственный вечерний французский бар на Белорусской».</p>
+            </div>
+            <div style="background: #4a5c46; color: white; padding: 24px; border-radius: 20px;">
+                <div style="font-size: 2rem;">🍸</div>
+                <h3 style="color: white; margin: 8px 0 12px;">Коктейльный фокус</h3>
+                <p style="color: #eae4dd;">Регулярные коллаборации, «коктейльный паспорт», вечера с бартендерами.</p>
+            </div>
+            <div style="background: #8a6e4b; color: white; padding: 24px; border-radius: 20px;">
+                <div style="font-size: 2rem;">🌿</div>
+                <h3 style="color: white; margin: 8px 0 12px;">Сезонная веранда</h3>
+                <p style="color: #eae4dd;">Открыть летнюю террасу в 2026 — ключевой фактор роста.</p>
+            </div>
+            <div style="background: #345e6b; color: white; padding: 24px; border-radius: 20px;">
+                <div style="font-size: 2rem;">📱</div>
+                <h3 style="color: white; margin: 8px 0 12px;">Платёжные сервисы</h3>
+                <p style="color: #eae4dd;">Программа лояльности, оплата по QR, предзаказ с онлайн-оплатой.</p>
+            </div>
+        </div>
+        <p style="margin-top: 24px; padding: 16px; background: #efeae3; border-radius: 16px;">
+            <strong>Краткое резюме:</strong> Bijou обладает редкой комбинацией вечернего графика и французской ДНК. 
+            При усилении событийного маркетинга, запуске веранды и цифровых сервисов заведение укрепит позиции 
+            и увеличит поток платёжеспособной аудитории со средним чеком 1500–2500 ₽. 
+            Платёжный портрет диктует тренд на безналичные расчёты и быстрые способы оплаты — их развитие повысит лояльность.
+        </p>
+    </section>
+
+    <div class="footer-note">
+        Аналитика на основе открытых данных Яндекс Карт (февраль 2026) и поведенческих паттернов сегмента «выше среднего».<br>
+        Bijou · уголок Франции в ритме московских ночей.
+    </div>
+</div>
+</body>
+</html>
