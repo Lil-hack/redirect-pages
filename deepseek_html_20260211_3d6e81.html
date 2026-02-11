@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ общепита · Сердце Столицы</title>
+    <!-- Google Fonts & simple icons (Font Awesome) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #faf9f8;
+            color: #1e2a3a;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+            padding: 2.5rem 2rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
+            color: #0b1c2c;
+            border-left: 8px solid #e67e22;
+            padding-left: 1.5rem;
+        }
+        .subhead {
+            font-size: 1.1rem;
+            color: #5a6a7a;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .subhead i {
+            color: #e67e22;
+        }
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 2px solid #eaeef2;
+            padding-bottom: 0.5rem;
+        }
+        h2 i {
+            color: #e67e22;
+            font-size: 1.5rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #1e3a5f;
+        }
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        .insight-card {
+            background: #ffffff;
+            border: 1px solid #edf2f7;
+            border-radius: 20px;
+            padding: 1.5rem 1.3rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .insight-card:hover {
+            border-color: #e67e22;
+            box-shadow: 0 12px 20px rgba(230,126,34,0.08);
+        }
+        .insight-icon {
+            font-size: 1.8rem;
+            color: #e67e22;
+            margin-bottom: 0.7rem;
+        }
+        .insight-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #0b2b40;
+        }
+        .insight-card p {
+            color: #33475b;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+        .badge {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            border-radius: 50px;
+            padding: 0.2rem 0.9rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-right: 0.5rem;
+        }
+        .stat-highlight {
+            background: #fff8e7;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #c95a0f;
+        }
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th {
+            background: #1e3a5f;
+            color: white;
+            font-weight: 500;
+            padding: 0.9rem 1rem;
+            text-align: left;
+        }
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .cuisine-tag {
+            background: #edf2f7;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.15rem 0.15rem;
+            color: #1e3a5f;
+        }
+        .note {
+            background: #f1f9f9;
+            border-left: 5px solid #2c7a7b;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+            font-weight: 500;
+        }
+        .footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #dde7f0;
+            color: #5e6f7e;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <!-- ШАПКА -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem;">
+        <div>
+            <h1>Ресторанный технозон</h1>
+            <div class="subhead">
+                <i class="fas fa-map-marker-alt"></i> ЖК «Сердце Столицы», Москва 
+                <span style="background: #eaeef2; padding: 0.25rem 1rem; border-radius: 40px; margin-left: 0.8rem; font-size: 0.85rem;">
+                    <i class="fas fa-calendar-alt"></i> 2026 · свежий срез
+                </span>
+            </div>
+        </div>
+        <div style="background: #ffe6d5; padding: 0.5rem 1.2rem; border-radius: 40px;">
+            <span style="font-weight: 700; color: #c95a0f;">25 заведений</span> в выборке
+        </div>
+    </div>
+
+    <!-- ВВОДНАЯ -->
+    <p style="font-size: 1.05rem; margin-bottom: 2rem; background: #f4f9fc; padding: 1rem 1.5rem; border-radius: 20px;">
+        <i class="fas fa-chart-line" style="color: #e67e22; margin-right: 0.5rem;"></i> 
+        Аналитический разбор выдачи Яндекс Карт (запрос «Где поесть», февраль 2026).  
+        В фокусе — плотная застройка ЖК, гиперконкуренция и новые гибридные форматы.  
+        <strong>Ключевой вывод:</strong> классические рестораны уступают место коллаборациям, специализации и «еде как сервису».
+    </p>
+
+    <!-- 1. ТОТАЛЬНАЯ КОФЕИНИЗАЦИЯ -->
+    <h2><i class="fas fa-mug-hot"></i> 11 кофеен на 100 метров</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; margin-bottom: 0.5rem;">
+        <div style="background: #fff5ec; padding: 1.5rem; border-radius: 20px;">
+            <span class="badge" style="background: #e67e22;">перенасыщение</span>
+            <p style="margin-top: 1rem; font-weight: 500;">В радиусе 200 м работают <span style="font-size: 1.8rem; font-weight: 700; color: #c95a0f;">11</span> точек с кофе и завтраками. Рынок сместился в плоскость УТП.</p>
+        </div>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 20px;">
+            <span class="badge" style="background: #2c3e50;">стратегии выживания</span>
+            <ul style="margin-top: 0.8rem; list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 0.5rem;"><i class="fas fa-hand-holding-heart" style="color: #e67e22;"></i> <strong>Surf Coffee X Grain</strong> – коллаборация</li>
+                <li style="margin-bottom: 0.5rem;"><i class="fas fa-leaf" style="color: #e67e22;"></i> <strong>Saint Marie vs Здоровый человек</strong> – ЗОЖ</li>
+                <li style="margin-bottom: 0.5rem;"><i class="fas fa-bread-slice" style="color: #e67e22;"></i> <strong>Печорин</strong> – ремесленный хлеб</li>
+                <li style="margin-bottom: 0.5rem;"><i class="fas fa-cocktail" style="color: #e67e22;"></i> <strong>Рожь</strong> – авторские напитки</li>
+                <li><i class="fas fa-bubble-tea" style="color: #e67e22;"></i> <strong>Pims</strong> – тапиока, чайная ниша</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ГРИД С ОСНОВНЫМИ ИНСАЙТАМИ (9 шт) -->
+    <h2 style="margin-top: 2rem;"><i class="fas fa-lightbulb"></i> 9 главных закономерностей</h2>
+    <div class="insight-grid">
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-store-alt"></i></div>
+            <h4>Гибриды вместо чистой еды</h4>
+            <p><span class="stat-highlight">Cuteam</span> (бьюти-коворкинг + кофе), <span class="stat-highlight">FreshClass</span> (магазин/винотека/кафе 24/7), <span class="stat-highlight">Only</span> (караоке/кальян). Еда — лишь фон.</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-child"></i></div>
+            <h4>Детский фактор — король трафика</h4>
+            <p><strong>Ribambelle</strong> — 1001 отзыв. При рейтинге 4.4 генерирует в 2× больше фидбека, чем премиум-рестораны. Родители прощают многое ради детской комнаты.</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-crown"></i></div>
+            <h4>Премиум без развлечения тормозит</h4>
+            <p>Vino e Cucina, М2, Suluguni — 400–600 отзывов, плато. <span class="stat-highlight">Only</span> (караоке) — 769 отзывов. Еда больше не главный магнит.</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-truck"></i></div>
+            <h4>Сети наконец зашли</h4>
+            <p><strong>Додо Пицца</strong> — 476 отзывов, чек 500₽. Первый крупный федерал внутри ЖК. Бюджетная альтернатива ресторанам, быстрая доставка.</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-clock"></i></div>
+            <h4>Круглосуточная монополия</h4>
+            <p>FreshClass и «Шаурма» работают 24/7. Ни одного круглосуточного ресторана или кофейни в радиусе 500 м. FreshClass фактически ночной бар.</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-apple-alt"></i></div>
+            <h4>ЗОЖ — уже не опция</h4>
+            <p>Saint Marie (детокс), М2 Органик (фермерское), Печорин (безглютеновый хлеб), свежая <strong>Азбука daily</strong>. Аудитория готова платить за «полезность».</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-star"></i></div>
+            <h4>Парадокс идеальных рейтингов</h4>
+            <p>Утро в Сердце (5,0; 148 отзывов), Рожь (5,0; 145), Ape (4,9; 35) — «рейтинг первой волны». Проверка наступит после 300+ отзывов.</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-egg"></i></div>
+            <h4>Свободная ниша №1</h4>
+            <p><strong style="color: #c0392b;">Азиатский фаст-фуд отсутствует внутри ЖК.</strong> ТокиоРим — дорогой микс (чек от 1500₽), Buba Mara — сербская кухня. Нет вока, фо-бо, рамёна с чеком до 1000₽.</p>
+        </div>
+        <div class="insight-card">
+            <div class="insight-icon"><i class="fas fa-seedling"></i></div>
+            <h4>Хлеб как новая кофейня</h4>
+            <p>Печорин и Рожь строят концепцию вокруг «ремесленной выпечки/авторского хлеба». Десерты становятся точкой притяжения.</p>
+        </div>
+    </div>
+
+    <!-- СЕГМЕНТЫ В ТАБЛИЦЕ -->
+    <h2 style="margin-top: 2.2rem;"><i class="fas fa-chart-pie"></i> Сегментация игроков</h2>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Сегмент</th>
+                    <th>Представители</th>
+                    <th>Средний чек / Ценник</th>
+                    <th>Особенность</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span style="font-weight: 600;">Премиум-рестораны</span></td>
+                    <td>Vino e Cucina, М2 Органик, Suluguni, Only, Flacon</td>
+                    <td>1500–3000 ₽</td>
+                    <td>Вино, авторская кухня, банкеты; Only/Flacon — караоке/кальян</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 600;">Сетевой QSR</span></td>
+                    <td>Додо Пицца</td>
+                    <td>500 ₽</td>
+                    <td>Единственный крупный федерал; доставка, навынос</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 600;">Кофейни-специалисты</span></td>
+                    <td>Surf X Grain, Рожь, Saint Marie, Печорин, Pims, CuteamCoffee, Дринкит</td>
+                    <td>капучино 120–420 ₽</td>
+                    <td>Узкое УТП: коллаб, ЗОЖ, хлеб, тапиока, коворкинг</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 600;">Гибрид / non‑food</span></td>
+                    <td>Cuteam, FreshClass</td>
+                    <td>—</td>
+                    <td>Коворкинг + кофе, магазин + винотека + кафе</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 600;">Детский / семейный</span></td>
+                    <td>Ribambelle</td>
+                    <td>≈ 1000–1500 ₽</td>
+                    <td>Игровая, анимация — главный драйвер отзывов</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 600;">Фаст-фуд / стрит</span></td>
+                    <td>Шаурма, Бруско (пицца/паста)</td>
+                    <td>400–900 ₽</td>
+                    <td>Шаурма 24/7; Бруско — итальянский демократ</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="margin-top: 0.3rem; font-size: 0.9rem; color: #5e6f7e;"><i class="fas fa-info-circle"></i> Кондитерские: Cake Home (десерты, ПВЗ), Bizu‑Bizu (макарон, конфеты).</p>
+
+    <!-- МАТРИЦА НИШ -->
+    <h2 style="margin-top: 2.5rem;"><i class="fas fa-binoculars"></i> Матрица свободных ниш</h2>
+    <div class="table-responsive">
+        <table style="background: white;">
+            <thead style="background: #1e3a5f;">
+                <tr>
+                    <th>Ниша</th>
+                    <th>Обоснование</th>
+                    <th>Риски</th>
+                    <th>Потенциал</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span style="font-weight: 700; background: #fff0d9; padding: 0.2rem 0.7rem; border-radius: 20px;">🥢 Азиатская лапшичная</span></td>
+                    <td>Полное отсутствие внутри ЖК. Додо подтверждает спрос на быстрый обед до 1000₽. Ми Ам и Ya Won — за периметром.</td>
+                    <td>Конкуренция с доставкой (Яндекс Еда), требуется сильное УТП</td>
+                    <td><span style="color: #27ae60; font-weight: 600;">ВЫСОКИЙ</span> — уникальная позиция</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 700; background: #ffe6e6; padding: 0.2rem 0.7rem; border-radius: 20px;">🧸 Детское кафе с анимацией</span></td>
+                    <td>Ribambelle перегружено, родители ищут альтернативу. Нет полноценного детского клуба.</td>
+                    <td>Высокий порог входа, сложный персонал</td>
+                    <td>СРЕДНИЙ, но лояльная аудитория</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 700; background: #fef7e0; padding: 0.2rem 0.7rem; border-radius: 20px;">🍔 Крафт-бургерная</span></td>
+                    <td>Бургеры только как часть завтрака (Утро в Сердце). Нет специализированной бургерной.</td>
+                    <td>Высокая себестоимость, дорогая аренда</td>
+                    <td>СРЕДНИЙ (при правильном позиционировании)</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 700; background: #e3f2fd; padding: 0.2rem 0.7rem; border-radius: 20px;">💻 Антикафе / коворкинг с едой</span></td>
+                    <td>Cuteam — только для бьюти-мастеров. Есть спрос на удалённую работу вне дома.</td>
+                    <td>Необходима большая площадь, окупаемость</td>
+                    <td>СРЕДНИЙ (формат «кофейня+рабочие места»)</td>
+                </tr>
+                <tr>
+                    <td><span style="font-weight: 700; background: #f1e6d2; padding: 0.2rem 0.7rem; border-radius: 20px;">🌿 Вьетнамская / Тайская</span></td>
+                    <td>Ми Ам (чек выше среднего) рядом, но внутри комплекса — ноль. Растущий тренд.</td>
+                    <td>Прямая конкуренция с доставкой из соседнего дома</td>
+                    <td>ВЫСОКИЙ — можно забрать аудиторию Ми Ам</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="background: #eafaf1; border-radius: 16px; padding: 1.2rem 1.8rem; margin-top: 1rem; border-left: 5px solid #2ecc71;">
+        <i class="fas fa-trophy" style="color: #27ae60; margin-right: 0.5rem;"></i> 
+        <strong>Наиболее перспективная ниша:</strong> «Вок-бар» с посадочными местами (12–15 столов), средний чек 600–800 ₽, доставка и навынос. 
+        Прямой конкурент Додо, но с уникальной азиатской кухней. Полный вакуум в радиусе 500 м.
+    </div>
+
+    <!-- СПЕЦИАЛЬНЫЙ БЛОК ПРО КРУГЛОСУТОЧНУЮ МОНОПОЛИЮ И РЕЙТИНГИ -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 2.5rem 0 0.5rem;">
+        <div style="flex: 1; min-width: 260px; background: #1e2a3a; border-radius: 24px; padding: 1.8rem; color: white;">
+            <i class="fas fa-moon" style="font-size: 2rem; color: #ffb347; margin-bottom: 0.8rem; display: block;"></i>
+            <h3 style="color: white; margin-bottom: 0.8rem;">Ночная монополия FreshClass</h3>
+            <p style="color: #cbd5e0; font-size: 0.95rem;">Единственное место в радиусе полукилометра, где можно поесть горячее, выпить вина и работать с ноутбуком в 3 часа ночи. Конкурентов — 0.</p>
+            <div style="background: #2d3a4a; padding: 0.7rem; border-radius: 12px; margin-top: 1rem;">
+                <span style="font-weight: 600;">⏳ FreshClass + Шаурма = 100% ночного трафика</span>
+            </div>
+        </div>
+        <div style="flex: 1; min-width: 260px; background: #fef7e7; border-radius: 24px; padding: 1.8rem; border: 1px solid #ffe5b4;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #e67e22; margin-bottom: 0.8rem; display: block;"></i>
+            <h3 style="color: #1e2a3a; margin-bottom: 0.8rem;">Рейтинговая турбулентность</h3>
+            <p style="color: #3b4e5e;">Заведения с идеальным 5,0 при 30–150 отзывах — «новая волна». Через полгода часть из них неизбежно просядет. <strong>Bizu‑Bizu</strong> (4,9/270 отзывов) — следующий кандидат на проверку.</p>
+            <div style="background: white; border-radius: 12px; padding: 0.8rem; margin-top: 0.8rem;">
+                <span class="cuisine-tag">⭐ Утро в Сердце 5,0 (148)</span>
+                <span class="cuisine-tag">⭐ Рожь 5,0 (145)</span>
+                <span class="cuisine-tag">⭐ Ape 4,9 (35)</span>
+                <span class="cuisine-tag">⭐ Saint Marie 4,9 (41)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФИНАЛЬНЫЙ ИНСАЙТ (жирный вывод) -->
+    <div class="note">
+        <i class="fas fa-bullseye" style="font-size: 1.6rem; color: #2c7a7b; margin-right: 1rem; vertical-align: middle;"></i>
+        <span style="font-size: 1.25rem; font-weight: 700;">Война концепций</span>
+        <p style="margin-top: 0.8rem; font-size: 1.05rem;">
+        Рынок перешёл в стадию <strong>«войны концепций»</strong>. Выигрывает не тот, кто вкуснее готовит, а тот, кто придумал нестандартную модель: коллаборация (Surf×Grain), гибрид (FreshClass, Cuteam), узкая специализация (Рожь, Печорин), вечерний досуг (Only, Ape).  
+        <br><span style="background: #ffe6d5; padding: 0.2rem 0.7rem; border-radius: 40px; display: inline-block; margin-top: 0.7rem;"><i class="fas fa-skull-crossbones"></i> Классический ресторан без «фишки» обречён проигрывать.</span>
+        </p>
+    </div>
+
+    <!-- ДОПОЛНИТЕЛЬНО: ПОДТВЕРЖДЁННАЯ НИША -->
+    <div style="background: linear-gradient(145deg, #f2f6fc, #ffffff); padding: 1.5rem; border-radius: 20px; margin-top: 2rem;">
+        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <div style="background: #c95a0f; border-radius: 50px; padding: 0.6rem 1.3rem; color: white; font-weight: 600;">
+                <i class="fas fa-check-circle"></i> ПОДТВЕРЖДЕНО
+            </div>
+            <div>
+                <h3 style="margin-bottom: 0.2rem;">Азиатский фаст-фуд — главная свободная ниша</h3>
+                <p style="color: #2c3e50;">В первом анализе мы указали на отсутствие демократичной азиатской лапшичной. Второй срез полностью подтвердил это: внутри ЖК нет ни одной точки с воком, рамёном или фо-бо по цене до 1000₽. «ТокиоРим» — ресторан, не конкурент.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПОДВАЛ -->
+    <div class="footer">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <span><i class="fas fa-database"></i> Источник: выдача Яндекс Карт, 11 февраля 2026. Обработано 25 бизнес-карточек ЖК «Сердце Столицы».</span>
+            <span style="letter-spacing: 2px;"><i class="fas fa-chart-simple"></i> INSIGHT REPORT · FOOD RETAIL 2026</span>
+        </div>
+        <div style="margin-top: 1rem; font-size: 0.85rem; color: #7b8c9d;">
+            Аналитический обзор на основе двух волпн данных. Свободное использование с указанием источника.
+        </div>
+    </div>
+</div>
+</body>
+</html>
