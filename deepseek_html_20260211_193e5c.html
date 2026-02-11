@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>Bijou · Еда как главный герой — 10 решений</title>
+    <style>
+        /* ===== БАЗА ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #faf8f5;
+            color: #2c2e35;
+            line-height: 1.6;
+            padding: 40px 24px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.06);
+            padding: 48px 48px;
+        }
+
+        /* ===== ТИПОГРАФИКА ===== */
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            color: #1a1f2a;
+            margin-bottom: 16px;
+            border-left: 10px solid #c79a6b;
+            padding-left: 32px;
+            line-height: 1.2;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #5b5f6b;
+            margin-bottom: 48px;
+            margin-top: 8px;
+            padding-left: 42px;
+            font-weight: 400;
+            max-width: 80%;
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            font-weight: 550;
+            color: #2c303a;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h2 span {
+            background: #c79a6b;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* ===== СЕТКА КАРТОЧЕК ===== */
+        .grid-10 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            margin-bottom: 56px;
+        }
+
+        @media (max-width: 800px) {
+            .container { padding: 32px 24px; }
+            h1 { font-size: 2rem; padding-left: 20px; }
+            .subhead { padding-left: 30px; max-width: 100%; }
+            .grid-10 { grid-template-columns: 1fr; }
+        }
+
+        /* ===== КАРТОЧКА ===== */
+        .idea-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 28px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.02);
+            border: 1px solid #f0edea;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .idea-card:hover {
+            border-color: #dfd6cd;
+            box-shadow: 0 12px 24px -8px rgba(199, 154, 107, 0.08);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: #ede8e2;
+            color: #7a6a5a;
+            font-weight: 700;
+            font-size: 1.6rem;
+            border-radius: 50%;
+            transition: 0.15s;
+        }
+
+        .idea-card:hover .card-number {
+            background: #c79a6b;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #1e242c;
+            margin: 0;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .card-desc {
+            color: #3f444e;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .realization {
+            background: #f7f5f2;
+            border-radius: 18px;
+            padding: 16px 20px;
+            margin-top: auto;
+            font-size: 0.9rem;
+            border-left: 4px solid #c79a6b;
+        }
+
+        .realization strong {
+            color: #755b3e;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.92rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .realization p {
+            margin-bottom: 4px;
+            color: #494e58;
+        }
+
+        .emoji-icon {
+            font-size: 1.8rem;
+            margin-right: 6px;
+        }
+
+        /* ===== БЛОК МЕТРИК ===== */
+        .metrics {
+            background: linear-gradient(135deg, #f5f2ef 0%, #fefcf9 100%);
+            border-radius: 32px;
+            padding: 36px 40px;
+            margin-top: 24px;
+            border: 1px solid #e6dfd7;
+        }
+
+        .metrics h3 {
+            font-size: 1.8rem;
+            font-weight: 550;
+            color: #2b2f38;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .metric-item {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a1f2a;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #655b52;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 800px) {
+            .metrics-grid { grid-template-columns: 1fr; }
+        }
+
+        .footer-note {
+            margin-top: 56px;
+            padding-top: 24px;
+            border-top: 1px solid #e4ddd5;
+            font-size: 0.85rem;
+            color: #6f6f6f;
+            text-align: center;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #ede8e2;
+            color: #5b4e42;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            margin-right: 6px;
+            margin-bottom: 4px;
+        }
+
+        .highlight {
+            background: #fef0e6;
+            padding: 2px 10px;
+            border-radius: 24px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ЗАГОЛОВОК – ЕДА КАК ГЛАВНЫЙ ГЕРОЙ -->
+    <h1>Еда вместо коктейлей<br>10 шагов к позиции «гастрономическое бистро»</h1>
+    <div class="subhead">
+        Bijou обладает уникальной французской ДНК. Эти решения смещают фокус с барной культуры на кухню,<br>не теряя вечерней атмосферы и сохраняя лояльность гостей.
+    </div>
+
+    <!-- СЕТКА ИЗ 10 ИДЕЙ -->
+    <div class="grid-10">
+
+        <!-- 1. Ребрендинг позиционирования -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">1</div>
+                <div class="card-title">Ребрендинг: «французское бистро»</div>
+            </div>
+            <div class="card-desc">
+                Заменить слово «гастробар» на <strong>«современное парижское бистро»</strong> или «бистрономический бар». Еда — первая причина прийти.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>📌 Обновить описание в Яндекс Картах, соцсетях, меню.</p>
+                <p>📌 Слоган: <em>«Французская кухня, достойная отдельного путешествия»</em>.</p>
+                <p>📌 Коктейли переместить в конец меню.</p>
+            </div>
+        </div>
+
+        <!-- 2. Гастрономический сет-меню -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">2</div>
+                <div class="card-title">Сет-меню от шефа</div>
+            </div>
+            <div class="card-desc">
+                Фиксированное меню из 4–6 блюд, которое меняется раз в две недели. Без обязательной коктейльной пары.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🍽️ Название в честь французского региона: «Ужин в Провансе», «Бретонский сет».</p>
+                <p>💰 Цена 2500–3000 ₽ — вино / коктейли оплачиваются отдельно.</p>
+                <p>📢 Анонсы за 5 дней, лимит 15–20 персон.</p>
+            </div>
+        </div>
+
+        <!-- 3. Блюдо дня с историей -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">3</div>
+                <div class="card-title">«Le Plat du Jour»</div>
+            </div>
+            <div class="card-desc">
+                Каждый день — особенное блюдо, о котором рассказывают официанты и соцсети. Формирует привычку возвращаться ради еды.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🐓 Пн — Bœuf Bourguignon, Ср — Escargots, Пт — Sole Meunière.</p>
+                <p>🎤 Короткая легенда от шефа в меню и устно.</p>
+                <p>📸 Ежедневный сторителлинг в Instagram.</p>
+            </div>
+        </div>
+
+        <!-- 4. Chef’s table / открытая кухня -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">4</div>
+                <div class="card-title">Chef’s table</div>
+            </div>
+            <div class="card-desc">
+                Небольшой стол у кухни (или у открытой витрины с закусками). Гости видят процесс и общаются с шефом.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>👨‍🍳 2–4 места, бронирование только под сет-меню.</p>
+                <p>✨ В парижских бистро — открытая разделка продуктов, создаёт доверие.</p>
+                <p>📹 Контент: приготовление блюд в реальном времени.</p>
+            </div>
+        </div>
+
+        <!-- 5. Винно-гастрономические ужины без коктейлей -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">5</div>
+                <div class="card-title">Soirée Vigneronne</div>
+            </div>
+            <div class="card-desc">
+                Раз в месяц — ужин, где каждое блюдо сопровождает вино, а коктейли отсутствуют принципиально.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🍷 Приглашать небольшие французские винодельни (через импортёров).</p>
+                <p>🥩 Специальное меню из 5 подач.</p>
+                <p>🏷️ Стоимость — фиксированная, вино включено.</p>
+            </div>
+        </div>
+
+        <!-- 6. Les Grands Classiques — витрина кухни -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">6</div>
+                <div class="card-title">Большая французская классика</div>
+            </div>
+            <div class="card-desc">
+                5–6 знаковых блюд, которые всегда в меню. Фирменная посуда, эффектная подача (фламбе, чугунок, сырная корочка).
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🔥 Луковый суп — под грилем, Петух в вине — в чугунке.</p>
+                <p>🎓 Тренинг официантов: история блюда за 30 секунд.</p>
+                <p>📷 Профессиональная фотосъёмка для всех носителей.</p>
+            </div>
+        </div>
+
+        <!-- 7. Фирменный десерт-символ -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">7</div>
+                <div class="card-title">Десерт‑автограф</div>
+            </div>
+            <div class="card-desc">
+                Создать десерт, который ассоциируется только с Bijou. Например, <strong>Тарт Татен с кальвадосом и солёной карамелью</strong>.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🍏 Подавать с нормандским сидром (или без — опционально).</p>
+                <p>📱 Акция: «десерт за комплимент в соцсетях» — виральность.</p>
+                <p>🏆 Блюдо — must‑try во всех обзорах.</p>
+            </div>
+        </div>
+
+        <!-- 8. Bijou à emporter — только еда -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">8</div>
+                <div class="card-title">Премиальная доставка еды</div>
+            </div>
+            <div class="card-desc">
+                Линейка готовых блюд на вынос / доставку: никаких коктейлей, только еда. Паштеты, конфи, десерты.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🛵 Запустить на собственном сайте / Яндекс Еда (категория «авторская кухня»).</p>
+                <p>🎁 Брендированная упаковка, позиционирование «Французский ужин дома».</p>
+                <p>🍷 Вино можно добавить, но коктейли — нет.</p>
+            </div>
+        </div>
+
+        <!-- 9. Гастрофестиваль французского региона -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">9</div>
+                <div class="card-title">Фестиваль региона</div>
+            </div>
+            <div class="card-desc">
+                Двухнедельное событие, посвящённое одной области Франции. Только еда, никаких специальных коктейлей.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🌊 «Бретань» — мидии, гречневые блины, сидр.</p>
+                <p>🧀 «Нормандия» — сыры, яблоки, утка.</p>
+                <p>🗓️ Афиша, коллаборации с French Alliance.</p>
+            </div>
+        </div>
+
+        <!-- 10. Визуальный рестайлинг: шеф и блюда в центре -->
+        <div class="idea-card">
+            <div class="card-header">
+                <div class="card-number">10</div>
+                <div class="card-title">Шеф — лицо ресторана</div>
+            </div>
+            <div class="card-desc">
+                80% контента — крупные планы блюд, процесс приготовления, шеф-повар. Минимум коктейльных фото.
+            </div>
+            <div class="realization">
+                <strong>Как реализовать</strong>
+                <p>🎥 Интервью с шефом, серия «Рецепт недели».</p>
+                <p>🍳 Видео: нарезка трюфеля, фламбирование, финальная подача.</p>
+                <p>📘 Слоган в шапке профиля: «Кухня, вдохновлённая Парижем».</p>
+            </div>
+        </div>
+
+    </div> <!-- конец сетки карточек -->
+
+    <!-- БЛОК МЕТРИК – ЧТО ИЗМЕНИТСЯ -->
+    <div class="metrics">
+        <h3>
+            <span>📈</span> Метрики успеха — через 3–4 месяца
+        </h3>
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-value">+20%</div>
+                <div class="metric-label">Доля заказов без коктейлей</div>
+                <p style="margin-top: 12px; color: #4a4f5a; font-size: 0.9rem;">Гости приходят специально ради еды</p>
+            </div>
+            <div class="metric-item">
+                <div class="metric-value">↑ 1,5x</div>
+                <div class="metric-label">Упоминания блюд в отзывах</div>
+                <p style="margin-top: 12px; color: #4a4f5a; font-size: 0.9rem;">«луковый суп», «утиная ножка», «тартар»</p>
+            </div>
+            <div class="metric-item">
+                <div class="metric-value">+10–15%</div>
+                <div class="metric-label">Рост среднего чека</div>
+                <p style="margin-top: 12px; color: #4a4f5a; font-size: 0.9rem;">За счёт дорогих мясных/рыбных позиций</p>
+            </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;">
+            <span class="tag">Коктейли остаются, но уходят на второй план</span>
+            <span class="tag">УТП — французская гастрономия</span>
+            <span class="tag">События = еда, а не бар</span>
+            <span class="tag">Bijou — бистро, а не бар</span>
+        </div>
+    </div>
+
+    <!-- ДОПОЛНИТЕЛЬНО: КОРОТКАЯ СВОДКА -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 48px;">
+        <div style="display: flex; gap: 8px;">
+            <span style="background: #1e232f; color: white; padding: 10px 24px; border-radius: 40px; font-weight: 500;">🇫🇷 Французская идентичность</span>
+            <span style="background: #ffffff; border: 1px solid #c79a6b; color: #6a4e34; padding: 10px 24px; border-radius: 40px; font-weight: 500;">🍽️ Еда — главный герой</span>
+        </div>
+        <p style="color: #6b5e52; font-style: italic; margin-top: 12px;">«Bijou сохраняет вечернюю атмосферу, но становится местом силы для гурманов»</p>
+    </div>
+
+    <!-- ФУТЕР -->
+    <div class="footer-note">
+        <strong>10 решений для репозиционирования</strong> · Bijou · 2026<br>
+        Аналитика на основе данных Яндекс Карт, отзывов и паттернов поведения аудитории сегмента «выше среднего».
+    </div>
+
+</div> <!-- конец .container -->
+</body>
+</html>
