@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Геоаналитика · Бруско траттория (Шелепиха)</title>
+    <!-- Yandex Font & simple styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 1rem 0.75rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -12px rgba(0,20,30,0.15);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(102deg, #0b2b26 0%, #1b4b43 100%);
+            color: white;
+            padding: 1.5rem 1.2rem;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .header .sub {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .header .sub span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: rgba(255,255,255,0.15);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        .content {
+            padding: 1.5rem 1.2rem;
+        }
+        .grid-2, .grid-3 {
+            display: grid;
+            gap: 1.2rem;
+        }
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+        .grid-3 {
+            grid-template-columns: 1fr;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.2rem 1.2rem;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.02), 0 0 0 1px #e9edf2;
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            box-shadow: 0 10px 22px rgba(0,30,20,0.05), 0 0 0 1px #cbd5e1;
+        }
+        .card h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.6rem;
+            color: #0b2b26;
+        }
+        .card h2 i {
+            font-size: 1.3rem;
+            font-style: normal;
+        }
+        .stat-list {
+            list-style: none;
+        }
+        .stat-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            font-size: 0.95rem;
+        }
+        .stat-list li strong {
+            font-weight: 600;
+            color: #334155;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 1rem 0 0.2rem;
+        }
+        .tag {
+            background: #eef2f6;
+            color: #1e3a3a;
+            padding: 0.25rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .competitor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .competitor-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px dashed #d4dce6;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .distance {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f1f5f9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .marketing-block {
+            background: #f4faf8;
+            border-radius: 20px;
+            padding: 1.5rem 1.2rem;
+            margin-top: 1.5rem;
+            border: 1px solid #cbd5e1;
+        }
+        .marketing-block h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0b2b26;
+            margin-bottom: 1rem;
+        }
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.8rem;
+            margin: 1rem 0 0.8rem;
+        }
+        .partner-card {
+            background: white;
+            border-radius: 40px;
+            padding: 0.5rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            font-weight: 500;
+            font-size: 0.8rem;
+            border: 1px solid #dee7ef;
+        }
+        .partner-card span {
+            background: #1b4b43;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .idea-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0 0.5rem;
+            padding-left: 1.2rem;
+        }
+        .idea-list li {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #e2e8f0;
+            margin: 1.5rem 0 1rem;
+        }
+        .footnote {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-align: right;
+            margin-top: 1rem;
+        }
+        /* компактные карточки с метриками */
+        .metric-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .metric-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02), 0 0 0 1px #e9edf2;
+            text-align: center;
+        }
+        .metric-card div:first-child {
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+        }
+        .metric-card div:nth-child(2) {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .metric-card div:last-child {
+            font-size: 0.8rem;
+            color: #475569;
+        }
+        /* спрос карточки */
+        .demand-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+        .demand-item {
+            background: #f0f9f6;
+            border-radius: 18px;
+            padding: 1rem;
+        }
+        .demand-item .title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .demand-item .desc {
+            font-size: 0.85rem;
+        }
+        /* планшетные и десктопные стили */
+        @media (min-width: 640px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header .sub {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .metric-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .demand-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .stat-list li {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            .stat-list li strong {
+                min-width: 110px;
+                margin-bottom: 0;
+            }
+        }
+        @media (min-width: 900px) {
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .content {
+                padding: 2rem 2.2rem;
+            }
+            .header {
+                padding: 2rem 2.2rem;
+            }
+        }
+        /* для маленьких экранов улучшаем читаемость */
+        @media (max-width: 380px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .card h2 {
+                font-size: 1.1rem;
+            }
+            .partner-card {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🍽️ Бруско траттория · Геомаркетинговый отчёт</h1>
+        <div class="sub">
+            <span>📍 Шелепихинская наб., 34 к.6</span>
+            <span class="badge">ЖК «Сердце Столицы» / Сидней Сити</span>
+            <span>📊 анализ на основе all_data.json (радиус ~1 км)</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- компактные метрики (мобильные карточки) -->
+        <div class="metric-cards">
+            <div class="metric-card">
+                <div>🚇🚌</div>
+                <div>транспорт</div>
+                <div>МЦК Шелепиха (1,2 км), 7 остановок, причал</div>
+            </div>
+            <div class="metric-card">
+                <div>👥</div>
+                <div>пешеходный трафик</div>
+                <div>ЖК бизнес‑класса, 3 БЦ, школы, фитнес</div>
+            </div>
+            <div class="metric-card">
+                <div>🍕</div>
+                <div>конкуренция</div>
+                <div>>15 кафе/ресторанов в 500 м, итальянская ниша</div>
+            </div>
+        </div>
+
+        <!-- 1-2 Транспорт и пешеходы -->
+        <div class="grid-2" style="margin-bottom: 1.2rem;">
+            <!-- 1. Транспортная доступность -->
+            <div class="card">
+                <h2><i>🚦</i> Транспортная доступность</h2>
+                <ul class="stat-list">
+                    <li><strong>Автобусы:</strong> ост. «Шелепихинская наб.» (0,19 км), «Ул. Шеногина» (0,25 км), «Новофилёвский пр.» (0,5 км)</li>
+                    <li><strong>Ж/д / МЦК:</strong> станция «Шелепиха» (МЦК/МЦД) ≈ 1,2 км</li>
+                    <li><strong>Водный транспорт:</strong> причал «Сердце Столицы» (0,4 км)</li>
+                    <li><strong>Личный авто:</strong> парковки рядом (0,29 км / 0,66 км)</li>
+                </ul>
+                <div class="tag-group">
+                    <span class="tag">высокая доступность</span>
+                    <span class="tag">удобно для авто</span>
+                </div>
+            </div>
+            <!-- 2. Пешеходный трафик -->
+            <div class="card">
+                <h2><i>🚶</i> Пешеходный трафик</h2>
+                <ul class="stat-list">
+                    <li><strong>Жилые комплексы:</strong> «Сердце Столицы», «Сидней Сити», «Level Причальный», «Береговой» (тысячи жителей 25–45 лет)</li>
+                    <li><strong>Бизнес‑центры:</strong> Сидней Сити (0,19 км), Магистраль (0,82 км)</li>
+                    <li><strong>Социальные магниты:</strong> школа №1253 (0,14 км), 5 детсадов, фитнес Xfit, DDX, Art of Pilates</li>
+                    <li><strong>Сервисные точки:</strong> 10+ пунктов выдачи, салоны красоты</li>
+                </ul>
+                <div class="tag-group">
+                    <span class="tag">поток 7/24</span>
+                    <span class="tag">жители+офисы</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-4 Инфраструктура и конкуренты -->
+        <div class="grid-2" style="margin-bottom: 1.2rem;">
+            <div class="card">
+                <h2><i>🏪</i> Инфраструктура (радиус 500 м)</h2>
+                <ul class="stat-list">
+                    <li><strong>Продуктовые:</strong> Дикси, ВкусВилл, Пятёрочка, Перекрёсток, Магнит</li>
+                    <li><strong>Медицина:</strong> CMD (0,032 км), стоматологии, аптеки «Ригла», «36,6»</li>
+                    <li><strong>Красота и спорт:</strong> >20 салонов (Betone, Персона, Soda, Britva), фитнес Xfit, бассейн OctoSkills</li>
+                    <li><strong>Досуг:</strong> скейт‑парк, храм, театр «Я‑Актер!», спортплощадки</li>
+                </ul>
+                <div class="tag-group">
+                    <span class="tag">полная обеспеченность</span>
+                    <span class="tag">высокий трафик услуг</span>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i>🍽️</i> Конкуренты (ближайшие)</h2>
+                <div class="competitor-list">
+                    <div class="competitor-item"><span>🥟 Suluguni (грузинский)</span> <span class="distance">0,141 км</span></div>
+                    <div class="competitor-item"><span>🍕 Додо Пицца</span> <span class="distance">0,459 км</span></div>
+                    <div class="competitor-item"><span>🍝 Vino e Cucina (итальянский)</span> <span class="distance">0,312 км</span></div>
+                    <div class="competitor-item"><span>☕ Дринкит / Surf Coffee</span> <span class="distance">0,023 / 0,151 км</span></div>
+                    <div class="competitor-item"><span>🍽️ Ми Ам, Buba Mara</span> <span class="distance">0,14 / 0,209 км</span></div>
+                    <div class="competitor-item"><span>🥘 ТокиоРим, Утро в Сердце</span> <span class="distance">0,382 / 0,453 км</span></div>
+                </div>
+                <p style="margin-top: 0.8rem; font-size: 0.85rem; background: #ecfdf5; padding: 0.5rem; border-radius: 16px;">
+                ⚡ Высокая плотность, но «Бруско» — единственная траттория с акцентом на неаполитанскую пиццу.
+                </p>
+            </div>
+        </div>
+
+        <!-- 5 + 6 Демография и экономика -->
+        <div class="grid-2" style="margin-bottom: 1.2rem;">
+            <div class="card">
+                <h2><i>👪</i> Демографические характеристики</h2>
+                <ul class="stat-list">
+                    <li><strong>Возраст:</strong> 25–45 лет — молодые семьи, одиночки, пары (новостройки бизнес‑класса)</li>
+                    <li><strong>Доход:</strong> выше среднего, ценят качество и комфорт</li>
+                    <li><strong>Домохозяйства:</strong> часто с детьми (детсады, школы рядом)</li>
+                    <li><strong>Офисные сотрудники:</strong> работники бизнес‑центров</li>
+                </ul>
+                <div class="tag-group">
+                    <span class="tag">платёжеспособные</span>
+                    <span class="tag">семейные + профессионалы</span>
+                </div>
+            </div>
+            <div class="card">
+                <h2><i>💰</i> Экономика локации</h2>
+                <ul class="stat-list">
+                    <li><strong>Трафик:</strong> высокий и стабильный</li>
+                    <li><strong>Аренда:</strong> выше средней по городу, но окупается</li>
+                    <li><strong>Перспектива:</strong> район достраивается, население растёт</li>
+                    <li><strong>Потенциал:</strong> средний чек 1500–2500₽, проходимость до 70 чел./день</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 7. Потенциальный спрос (мобильные карточки) -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <h2><i>📊</i> Потенциальный спрос</h2>
+            <div class="demand-grid">
+                <div class="demand-item">
+                    <div class="title">🏠 Жители ЖК</div>
+                    <div class="desc">постоянные клиенты (ужины, завтраки, доставка). Детское меню.</div>
+                </div>
+                <div class="demand-item">
+                    <div class="title">💼 Офисный персонал</div>
+                    <div class="desc">бизнес-ланчи в будни (до 50–100 чел./день)</div>
+                </div>
+                <div class="demand-item">
+                    <div class="title">🏋️ После фитнеса</div>
+                    <div class="desc">гости Xfit, DDX, Art of Pilates — здоровое меню</div>
+                </div>
+            </div>
+            <div class="tag-group" style="margin-top: 0.8rem;">
+                <span class="tag">💅 посетители салонов</span>
+                <span class="tag">📦 клиенты пунктов выдачи</span>
+                <span class="tag">👶 семьи с детьми</span>
+            </div>
+        </div>
+
+        <!-- Маркетинговая стратегия -->
+        <div class="marketing-block">
+            <h3>🚀 Маркетинговая стратегия</h3>
+
+            <div style="font-weight: 600; margin: 1rem 0 0.5rem;">🤝 Кросс‑маркетинг и партнёрства</div>
+            <div class="partners-grid">
+                <div class="partner-card"><span>🏋️</span> Xfit, DDX, Pilates</div>
+                <div class="partner-card"><span>💇</span> Betone, Персона, Soda</div>
+                <div class="partner-card"><span>🧸</span> Smile Fish, Art Kids</div>
+                <div class="partner-card"><span>📦</span> Wildberries, Ozon</div>
+                <div class="partner-card"><span>🏢</span> Сидней Сити, Магистраль</div>
+                <div class="partner-card"><span>🧖</span> Xspa, Персона</div>
+            </div>
+            <p style="font-size: 0.9rem; margin: 0.3rem 0;">· Скидки после тренировок, флаеры, детские мастер‑классы, доставка в офисы.</p>
+
+            <div style="font-weight: 600; margin: 1.2rem 0 0.3rem;">📢 Локальная реклама и события</div>
+            <ul class="idea-list">
+                <li>Расклейка в лифтах ЖК, почтовые ящики корпусов 2,3,4,5,6</li>
+                <li>Телеграм‑каналы района (5‑7 тыс. подписчиков)</li>
+                <li>«День соседа» — скидка 20% для жителей</li>
+                <li>Итальянские вечера, детские праздники</li>
+                <li>Акция «После спа — бокал просекко»</li>
+            </ul>
+
+            <div style="font-weight: 600; margin: 1.2rem 0 0.3rem;">📱 Digital & УТП</div>
+            <ul class="idea-list">
+                <li>Таргет ВК/Instagram радиус 1 км</li>
+                <li>Программа лояльности с баллами</li>
+                <li>Акцент на неаполитанскую пиццу, завтраки, бизнес‑ланчи</li>
+                <li>Доставка через сайт + агрегаторы</li>
+            </ul>
+
+            <hr>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                <span style="background: #0b2b26; color:white; padding: 0.3rem 1rem; border-radius: 60px; font-size: 0.8rem;">⭐ УТП: домашняя траттория</span>
+                <span style="background: #e2e8f0; padding: 0.3rem 1rem; border-radius: 60px; font-size: 0.8rem;">средний чек 1500–2500₽</span>
+            </div>
+        </div>
+
+        <!-- итоговое резюме (компактное) -->
+        <div style="background: #e6f0ed; border-radius: 18px; padding: 1.2rem; margin-top: 1.5rem; border-left: 4px solid #1b4b43;">
+            <p style="font-size: 0.9rem;"><strong>🔍 Итог:</strong> высокая транспортная доступность, насыщенный трафик (жители бизнес‑класса, офисы, сервисы). Развитая инфраструктура. При высокой конкуренции — чёткая ниша итальянской траттории, упор на завтраки, ланчи и партнёрства с локальным бизнесом.</p>
+        </div>
+
+        <div class="footnote">
+            *аналитика на основе all_data.json (февраль 2026)
+        </div>
+    </div> <!-- end content -->
+</div> <!-- end container -->
+</body>
+</html>
