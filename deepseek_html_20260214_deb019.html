@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Геоаналитика и маркетинг для Bijou Bar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #f4f6fa;
+            color: #1e1e2f;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 40px 48px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #0b0b1a;
+            letter-spacing: -0.02em;
+            border-left: 8px solid #d4a373;
+            padding-left: 24px;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #4a4a5e;
+            margin-bottom: 48px;
+            font-weight: 400;
+            border-bottom: 1px solid #eaeef2;
+            padding-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+            border: 1px solid #f0f2f5;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px -8px rgba(0, 0, 0, 0.08);
+            border-color: #d4a37340;
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #2b2b3d;
+        }
+
+        .card h2 span {
+            background: #d4a373;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .card p, .card li {
+            color: #2d2d3a;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .card ul, .card ol {
+            padding-left: 22px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .card strong {
+            color: #b4713c;
+            font-weight: 600;
+        }
+
+        .highlight {
+            background: #fdf5ed;
+            border-left: 4px solid #d4a373;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-weight: 500;
+            margin: 16px 0 8px;
+        }
+
+        .badge {
+            background: #e9eef2;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2d2d3a;
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .competitor-block {
+            background: #f9fbfd;
+            border-radius: 18px;
+            padding: 15px 20px;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        td, th {
+            padding: 12px 8px;
+            border-bottom: 1px solid #ecedef;
+            vertical-align: top;
+        }
+
+        th {
+            text-align: left;
+            font-weight: 600;
+            color: #5e5e72;
+        }
+
+        .strategy-block {
+            background: #faf6f0;
+            border-radius: 24px;
+            padding: 24px;
+            margin-top: 48px;
+        }
+
+        .strategy-block h2 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            border-left: 6px solid #d4a373;
+            padding-left: 20px;
+        }
+
+        .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .partner-item {
+            background: white;
+            border-radius: 60px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid #e7e7ed;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            background: #1e1e2f;
+            color: white;
+            padding: 24px 30px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+        }
+
+        .footer-note a {
+            color: #d4a373;
+            text-decoration: none;
+        }
+
+        /* ========== МОБИЛЬНЫЕ СТИЛИ (ДО 800px) ========== */
+        @media (max-width: 800px) {
+            body {
+                padding: 12px;
+            }
+            .container {
+                padding: 24px 16px;
+                border-radius: 28px;
+            }
+            h1 {
+                font-size: 1.9rem;
+                padding-left: 16px;
+                border-left-width: 6px;
+                line-height: 1.2;
+                word-break: break-word;
+            }
+            .subhead {
+                font-size: 1rem;
+                margin-bottom: 32px;
+                padding-bottom: 16px;
+            }
+            .grid {
+                grid-template-columns: 1fr; /* одноколоночная верстка */
+                gap: 20px;
+            }
+            .card {
+                padding: 20px 18px;
+                border-radius: 20px;
+            }
+            .card h2 {
+                font-size: 1.4rem;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+            .card h2 span {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+            }
+            .card p, .card li {
+                font-size: 0.95rem;
+            }
+            .competitor-block {
+                padding: 12px 14px;
+            }
+            .strategy-block {
+                padding: 18px 16px;
+                margin-top: 30px;
+            }
+            .strategy-block h2 {
+                font-size: 1.6rem;
+                padding-left: 14px;
+                margin-bottom: 18px;
+            }
+            .partner-grid {
+                grid-template-columns: 1fr; /* вертикально на телефоне */
+                gap: 12px;
+            }
+            .partner-item {
+                border-radius: 40px;
+                padding: 10px 16px;
+                font-size: 0.95rem;
+            }
+            .footer-note {
+                padding: 20px 18px;
+                border-radius: 24px;
+                font-size: 0.9rem;
+            }
+            table, tbody, tr, td, th {
+                display: block; /* упрощаем таблицу для мобильных */
+            }
+            tr {
+                margin-bottom: 16px;
+                border-bottom: 1px dashed #ccc;
+                padding-bottom: 10px;
+            }
+            td, th {
+                border-bottom: none;
+                padding: 6px 0;
+                display: flex;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            th {
+                font-weight: 700;
+                padding-top: 10px;
+            }
+            td::before {
+                content: "•";
+                color: #d4a373;
+                margin-right: 8px;
+                font-weight: bold;
+            }
+        }
+
+        /* очень маленькие экраны (до 400px) */
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.6rem;
+                padding-left: 12px;
+            }
+            .card h2 {
+                font-size: 1.25rem;
+            }
+            .card h2 span {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            .container {
+                padding: 18px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bijou Bar · Геоаналитика и геомаркетинг</h1>
+        <div class="subhead">2-я Брестская ул., 39, стр. 3, Москва • пн–чт 18:00–01:00, пт–сб 18:00–03:00</div>
+
+        <div class="grid">
+            <!-- 1. Транспортная доступность -->
+            <div class="card">
+                <h2><span>1</span>Транспортная доступность</h2>
+                <p><strong>Метро:</strong> 350–400 м до «Белорусской» (кольцевая/Замоскворецкая) и «Маяковской». Высочайший пассажиропоток.</p>
+                <p><strong>Наземный транспорт:</strong> Остановки «2-я Брестская ул.» и «Белорусский вокзал» в 2–5 минутах, десятки маршрутов.</p>
+                <p><strong>Ж/д + аэроэкспресс:</strong> Белорусский вокзал (700 м) → поток туристов, командированных.</p>
+                <p><strong>Авто:</strong> Платные городские парковки, парковка у ТЦ «Афи Галерея», но в дневные часы загружено. Вечером свободнее.</p>
+                <div class="highlight">⭐ Ключевой фактор: отличная доступность для жителей, офисных сотрудников и приезжих.</div>
+            </div>
+
+            <!-- 2. Пешеходный трафик -->
+            <div class="card">
+                <h2><span>2</span>Пешеходный трафик</h2>
+                <ul>
+                    <li><strong>Деловой центр:</strong> Офисы и бизнес-центры («Белая площадь», «Мономах», «Дукат Плейс») → поток офисных сотрудников в будни (after-work).</li>
+                    <li><strong>Торговля/услуги:</strong> Магазины, салоны красоты, аптеки, пункты выдачи — постоянный поток жителей.</li>
+                    <li><strong>Жилая застройка:</strong> Пресненский и Тверской районы — локальная аудитория для ужинов.</li>
+                    <li><strong>Туристы:</strong> Гостиницы (Marriott, Sheraton, «Пекин») + вокзал.</li>
+                </ul>
+                <p>Высокий и разнородный трафик, но время работы (с 18:00) смещает фокус на вечернюю аудиторию (после работы, на ужин, в бар).</p>
+            </div>
+
+            <!-- 3. Инфраструктура и окружение -->
+            <div class="card">
+                <h2><span>3</span>Инфраструктура и окружение</h2>
+                <p>В радиусе 300 м от бара сконцентрированы:</p>
+                <ul>
+                    <li><strong>Салоны красоты/спа:</strong> Libro Beauty, Brow Beauty Bar, «Город красоты» и др. → потенциал кросс-маркетинга.</li>
+                    <li><strong>Фитнес:</strong> World Class, Rock the Cycle — аудитория, готовая к умеренному отдыху.</li>
+                    <li><strong>Офисные центры:</strong> В том же здании (стр. 3) и рядом — офисники как целевая аудитория after-work.</li>
+                    <li><strong>Магазины и ТЦ:</strong> «Афи Галерея», «Тишинка», супермаркеты («Азбука вкуса», «ВкусВилл»).</li>
+                    <li><strong>Культура и гостиницы:</strong> Театры, музеи, отели высокого уровня.</li>
+                </ul>
+            </div>
+
+            <!-- 4. Конкурентная среда -->
+            <div class="card">
+                <h2><span>4</span>Конкурентная среда</h2>
+                <div class="competitor-block">
+                    <p><strong>Прямые конкуренты (бары, рестораны до 23:00–00:00):</strong> «Ломи бистро», «Curry», «Dizengof/99», «Старик и море», «The Бык», «Ku: Рамен Изакая», «Osso», «Eva», «Sage», «Ботаника» и др.</p>
+                </div>
+                <div class="competitor-block">
+                    <p><strong>Конкуренты с поздним режимом (до 01:00–06:00):</strong> «Винага» (до 03:00/05:00), «Harats Pub» (до 06:00), «Bad Bro Bar», «Ян Примус», «Родня», «Биркрафт», «Paddy's», «Bla Bla Bar», «Котельная», «Flacon Lounge».</p>
+                </div>
+                <p>Конкуренция высокая, но расположение в здании с офисами и салонами даёт преимущество для спонтанных визитов. Дифференциация: интерьер, кухня, коктейли, атмосфера.</p>
+            </div>
+
+            <!-- 5. Демографические характеристики -->
+            <div class="card">
+                <h2><span>5</span>Демографические характеристики</h2>
+                <p><strong>Ядро аудитории:</strong></p>
+                <ul>
+                    <li>Молодые специалисты, менеджеры 25–40 лет (работают рядом, доход выше среднего, ценят сервис).</li>
+                    <li>Жители Пресненского и Тверского районов — обеспеченные, часто без детей, любят досуг у дома.</li>
+                </ul>
+                <p><strong>Дополнительно:</strong> туристы, командированные, посетители nearby-заведений (театры, салоны), молодёжь (20–30 лет) для nightlife.</p>
+            </div>
+
+            <!-- 6. Экономика локации -->
+            <div class="card">
+                <h2><span>6</span>Экономика локации</h2>
+                <ul>
+                    <li><strong>Аренда:</strong> Высокая (50–100 тыс. руб./м² в год) — требует хорошей проходимости и среднего чека.</li>
+                    <li><strong>Средний чек (бар-ресторан):</strong> ориентир 2000–3500 ₽ (без учёта крепкого алкоголя).</li>
+                    <li><strong>Загрузка:</strong> Пик — вечер пятницы/субботы и будние after-work. Воскресенье–понедельник — ниже.</li>
+                    <li><strong>Платёжеспособность:</strong> высокая благодаря офисному кластеру и статусу района.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 7. Потенциальный спрос -->
+        <div style="margin-top: 30px;">
+            <div class="card" style="width: 100%;">
+                <h2><span>7</span>Потенциальный спрос: кто и сколько готов купить</h2>
+                <table>
+                    <tr><th>Сегмент</th><th>Время/повод</th><th>Средний чек</th></tr>
+                    <tr><td>Офисный after-work</td><td>будни 18:00–21:00 (группы коллег)</td><td>напитки + лёгкие закуски</td></tr>
+                    <tr><td>Романтические ужины / встречи с друзьями</td><td>пт–сб вечер</td><td>полный ужин, выше среднего</td></tr>
+                    <tr><td>Ночные гости (pre‑party / late night)</td><td>пт–сб после 23:00</td><td>коктейли, напитки</td></tr>
+                    <tr><td>Корпоративные мероприятия</td><td>закрытые вечеринки</td><td>договорной</td></tr>
+                </table>
+                <p>Спрос в будни вечером стабильно высокий, в пятницу/субботу — максимальный (требуется управление посадкой). Воскресенье–понедельник нуждаются в акциях.</p>
+            </div>
+        </div>
+
+        <!-- Маркетинговая стратегия -->
+        <div class="strategy-block">
+            <h2>📈 Маркетинговая стратегия</h2>
+
+            <h3>1. Кросс-маркетинг с партнёрами из ближайших организаций</h3>
+            <div class="partner-grid">
+                <span class="partner-item">💅 Салоны красоты (Libro, Brow, «Город красоты») — «Beauty & Bar» (скидка 10–15%)</span>
+                <span class="partner-item">🏋️ Фитнес-клубы (World Class, Rock the Cycle) — «После тренировки» (лёгкие закуски/безалкогольное)</span>
+                <span class="partner-item">🏢 Офисные центры («Белая площадь», «Мономах») — скидка 10% по пропуску, after-work ивенты</span>
+                <span class="partner-item">🏨 Гостиницы (Marriott, Sheraton, «Пекин») — визитки на стойке, welcome-коктейль</span>
+                <span class="partner-item">🎭 Театры и ДК (Театр комедии, ДК Зуева) — скидка по билету на ужин после шоу</span>
+            </div>
+
+            <h3>2. Локальная реклама и присутствие</h3>
+            <ul>
+                <li>Таргет ВК/Instagram на радиус 1–2 км</li>
+                <li>Оптимизация карточек в Яндекс.Картах и 2ГИС (фото, меню, акции, ответы на отзывы)</li>
+                <li>Промо в лифтах жилых домов и офисных центров</li>
+                <li>Микроинфлюенсеры района</li>
+            </ul>
+
+            <h3>3. Мероприятия (ивенты)</h3>
+            <ul>
+                <li>Тематические вечера (караоке, викторины, живая музыка, джаз по воскресеньям)</li>
+                <li>Мастер-классы по коктейлям (совместно с барменами)</li>
+                <li>After-work party в пятницу с 18:00 (спеццены на популярные коктейли)</li>
+            </ul>
+
+            <h3>4. Программа лояльности</h3>
+            <ul>
+                <li>Накопительная: 5‑й коктейль в подарок</li>
+                <li>Именинникам скидка 20% + комплимент от шефа</li>
+                <li>Happy hour в будни 18:00–20:00 (сниженные цены на выбранные напитки)</li>
+            </ul>
+
+            <h3>5. Работа с туристами</h3>
+            <ul>
+                <li>TripAdvisor, Google Maps (англ. версия, качественные фото)</li>
+                <li>Флаеры в зале ожидания Белорусского вокзала (спецпредложение)</li>
+            </ul>
+
+            <h3>6. Digital-маркетинг</h3>
+            <ul>
+                <li>Контекстная реклама в Яндексе («бар на Белорусской», «ресторан у метро Белорусская»)</li>
+                <li>Ретаргетинг на посетителей сайта/страницы</li>
+                <li>E-mail рассылки с анонсами событий</li>
+            </ul>
+        </div>
+
+        <!-- итоговый вывод -->
+        <div class="footer-note">
+            <p>✅ <strong>Вывод:</strong> Bijou Bar находится в сверхпроходном месте с отличной транспортной доступностью и мощным локальным трафиком. Конкуренция высока, но за счёт грамотного кросс-маркетинга с соседними салонами, фитнес-клубами, офисами и гостиницами, а также событийного маркетинга бар может занять устойчивую нишу вечернего притяжения для обеспеченной аудитории. Ключевые фокусы — after-work в будни и яркие выходные программы.</p>
+            <p style="margin-top: 16px;">📅 Анализ выполнен на основе данных <strong>all_data.json</strong> (местоположения, часы работы, конкурентное окружение, инфраструктура).</p>
+        </div>
+    </div>
+</body>
+</html>
